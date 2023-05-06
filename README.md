@@ -8,7 +8,6 @@
 [유민재] MinJae713
 [유세열] OxyToxi
 
----
 
 ### ✏ Commit Message Rules
 
