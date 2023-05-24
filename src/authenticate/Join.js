@@ -6,8 +6,9 @@ import {
   Keyboard,
   StyleSheet,
 } from "react-native";
-import Input, { InputType } from "../components/authenticate/Input";
+import JoinInput, { InputType } from "../components/authenticate/JoinInput";
 import Button from "../components/authenticate/Button";
+import { Entypo } from "@expo/vector-icons";
 
 const Membership = ({ navigation }) => {
   const [id, setId] = useState("");
@@ -22,52 +23,60 @@ const Membership = ({ navigation }) => {
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View style={styles.container}>
-        <View style={styles.title}>
+        <View style={styles.titleView}>
           {/* Header(chile - Text) */}
-          <Text>가입 정보를 입력해 주세요!</Text>
+          <Text style={styles.title}>Paw Plan</Text>
+          <View style={{ height: 15 }}></View>
+          <Text style={{ fontWeight: "bold", fontSize: 20 }}>회원가입</Text>
         </View>
         <View style={styles.content}>
-          <Input
+          <JoinInput
             inputType={InputType.NAME}
             operate={(text) => {
               setName(text);
               console.log(name);
             }}
           />
-          <Input
+          <View style={{ height: 10 }}></View>
+          <JoinInput
             inputType={InputType.NickName}
             operate={(text) => {
               setNickName(text);
               console.log(nickName);
             }}
           />
-          <Input
+          <View style={{ height: 10 }}></View>
+          <JoinInput
             inputType={InputType.AGE}
             operate={(text) => {
               setAge(text);
               console.log(age);
             }}
           />
-          <Input
+          <View style={{ height: 10 }}></View>
+          <JoinInput
             inputType={InputType.ID}
             operate={(text) => {
               setId(text);
               console.log(id);
             }}
           />
-          <Input
+          <View style={{ height: 10 }}></View>
+          <JoinInput
             inputType={InputType.PW}
             operate={(text) => {
               setPw(text);
               console.log(pw);
             }}
           />
+          <View style={{ height: 60 }}></View>
+          <Entypo name="emoji-happy" size={140} color="black" />
         </View>
         <View style={styles.footer}>
           {/* Footer(chile - Button, Button) */}
-          <Button title="back" onPress={() => navigation.navigate("Login")} />
+          <Button title="BACK" onPress={() => navigation.navigate("Login")} />
           <Button
-            title="가입"
+            title="JOIN"
             onPress={() => console.log(showMembershipInfo())}
           />
         </View>
@@ -80,17 +89,24 @@ export const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "stretch",
+    backgroundColor: "#D2B48C",
   },
   styledText: {
     fontSize: 30,
   },
-  title: {
+  titleView: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
   },
+  title: {
+    fontSize: 35,
+    fontWeight: "bold",
+    color: "#745757",
+  },
   content: {
     flex: 3,
+    alignItems: "center",
   },
   footer: {
     flex: 1,
