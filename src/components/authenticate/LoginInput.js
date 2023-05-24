@@ -34,6 +34,7 @@ const Input = (props) => {
         keyboardType={
           props.inputType == InputType.AGE ? "number-pad" : "default"
         }
+        secureTextEntry={props.inputType == InputType.PW}
       />
     </View>
   );

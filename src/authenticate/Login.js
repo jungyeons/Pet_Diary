@@ -54,7 +54,10 @@ const Login = ({ navigation }) => {
               />
               <Button
                 title="LOGIN"
-                onPress={() => navigation.navigate("MainTab")}
+                onPress={() => {
+                  console.log(id + ", " + pw);
+                  navigation.navigate("MainTab");
+                }}
               />
             </View>
             <View style={{ height: 80 }}></View>
