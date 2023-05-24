@@ -5,9 +5,12 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
   StyleSheet,
+  KeyboardAvoidingView,
+  Platform,
 } from "react-native";
-import Input, { InputType } from "../components/authenticate/Input";
+import LoginInput, { InputType } from "../components/authenticate/LoginInput";
 import Button from "../components/authenticate/Button";
+import { Entypo } from "@expo/vector-icons";
 
 const Login = ({ navigation }) => {
   const [id, setId] = useState("");
@@ -15,39 +18,49 @@ const Login = ({ navigation }) => {
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <View style={styles.container}>
-        <View style={styles.title}>
-          {/* Header(chile - Text) */}
-          <Text>반려동물 커뮤니티 어플리케이션</Text>
-        </View>
-        <View style={styles.content}>
-          {/* Body(child - Input Id, Input Pw, buttonView) */}
-          <Input
-            inputType={InputType.ID}
-            operate={(text) => {
-              setId(text);
-              console.log(id);
-            }}
-          />
-          <Input
-            inputType={InputType.PW}
-            operate={(text) => {
-              setPw(text);
-              console.log(pw);
-            }}
-          />
-          <View style={[styles.ButtonView]}>
-            <Button
-              title="회원가입"
-              onPress={() => navigation.navigate("Membership")}
+      <KeyboardAvoidingView
+        style={{ flex: 1 }}
+        behavior={Platform.select({ ios: "padding" })}
+      >
+        <View style={styles.container}>
+          <View style={styles.titleView}>
+            {/* Header(chile - Text) */}
+            <Text style={styles.title}>Paw Plan</Text>
+            <View style={{ height: 40 }}></View>
+            <Entypo name="baidu" size={80} color="#745757" />
+          </View>
+          <View style={styles.content}>
+            {/* Body(child - Input Id, Input Pw, buttonView) */}
+            <LoginInput
+              inputType={InputType.ID}
+              operate={(text) => {
+                setId(text);
+                console.log(id);
+              }}
             />
-            <Button
-              title="로그인"
-              onPress={() => navigation.navigate("MainTab")}
+            <View style={{ height: 35 }}></View>
+            <LoginInput
+              inputType={InputType.PW}
+              operate={(text) => {
+                setPw(text);
+                console.log(pw);
+              }}
             />
+            <View style={{ height: 50 }}></View>
+            <View style={[styles.ButtonView]}>
+              <Button
+                title="JOIN"
+                onPress={() => navigation.navigate("Membership")}
+              />
+              <Button
+                title="LOGIN"
+                onPress={() => navigation.navigate("MainTab")}
+              />
+            </View>
+            <View style={{ height: 80 }}></View>
           </View>
         </View>
-      </View>
+      </KeyboardAvoidingView>
     </TouchableWithoutFeedback>
   );
 };
@@ -58,10 +71,15 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "stretch",
   },
-  title: {
+  titleView: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+  },
+  title: {
+    fontSize: 45,
+    fontWeight: "bold",
+    color: "#745757",
   },
   content: {
     flex: 1,
