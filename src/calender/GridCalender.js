@@ -1,6 +1,8 @@
 import React from "react";
-import { Button, Text, View } from "react-native";
+import { Text, View } from "react-native";
 import PropTypes from "prop-types";
+import DateSelectHeader from "../components/calender/DateSelectHeader";
+import DateSelectButton from "../components/calender/DateSelectButton";
 
 const GridCalender = ({ selectedDate, year, month, handleDateSelection }) => {
   // 월별 일수 계산 함수
@@ -25,28 +27,8 @@ const GridCalender = ({ selectedDate, year, month, handleDateSelection }) => {
   const firstDayOfWeek = getDayOfWeek(year, month, 1);
 
   const calendar = [];
-
   // 요일 헤더
-  const weekdays = ["일", "월", "화", "수", "목", "금", "토"];
-  const weekdayHeader = weekdays.map((weekday) => (
-    <Text
-      key={weekday}
-      style={{ textAlign: "center", color: "black", fontWeight: "bold" }}
-    >
-      {weekday}
-    </Text>
-  ));
-  calendar.push(
-    <View
-      key="header"
-      style={{
-        flexDirection: "row",
-        justifyContent: "center",
-      }}
-    >
-      {weekdayHeader}
-    </View>
-  );
+  calendar.push(<DateSelectHeader key={"weekDayView"} />);
 
   // 날짜 출력
   let row = [];
@@ -54,13 +36,14 @@ const GridCalender = ({ selectedDate, year, month, handleDateSelection }) => {
     row.push(<Text key={`empty-${i}`} />);
   }
   for (let day = 1; day <= daysInMonth; day++) {
-    const date = `${year}년 ${month}월 ${day}일`;
+    const date = `${year}-${month}-${day}`;
     row.push(
-      <Button
+      <DateSelectButton
         key={date}
-        title={day.toString()}
-        onPress={() => handleDateSelection(date)}
-        style={[getDateButtonStyle(date), { flex: 1, aspectRatio: 1 }]}
+        year={year}
+        month={month}
+        day={day}
+        handleDateSelection={handleDateSelection}
       />
     );
 
@@ -70,9 +53,7 @@ const GridCalender = ({ selectedDate, year, month, handleDateSelection }) => {
           key={day}
           style={{
             flexDirection: "row",
-            justifyContent: "center",
-            borderWidth: 1,
-            borderColor: "green",
+            justifyContent: "flex-start",
           }}
         >
           {row}
@@ -81,7 +62,18 @@ const GridCalender = ({ selectedDate, year, month, handleDateSelection }) => {
       row = [];
     }
   }
-  return calendar;
+
+  return (
+    <View>
+      <View style={{ marginBottom: 7 }}></View>
+      <View style={{ flexDirection: "row", justifyContent: "space-around" }}>
+        <Text>년도지정</Text>
+        <Text>월지정</Text>
+      </View>
+      <View style={{ marginBottom: 7 }}></View>
+      <View>{calendar}</View>
+    </View>
+  );
 };
 
 GridCalender.propTypes = {

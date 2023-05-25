@@ -87,19 +87,18 @@ const styles = StyleSheet.create({
     color: "#745757",
   },
   header: {
-    flex: 1,
+    height: 80,
     borderWidth: 1,
     justifyContent: "center",
     alignItems: "center",
   },
   calView: {
     flex: 3,
-    borderWidth: 1,
     marginBottom: 20,
     alignSelf: "center",
   },
   contentView: {
-    flex: 5,
+    flex: 4,
     borderWidth: 1,
   },
   todoTitle: {
@@ -108,7 +107,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   todoTexts: {
-    marginBottom: 20,
+    marginBottom: 15,
     fontSize: 25,
     fontWeight: "bold",
     color: "#745757",
