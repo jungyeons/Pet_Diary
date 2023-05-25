@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, TextInput, KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard } from "react-native";
 import ContentHeader from "./ContentHeader";
 import GridCalender from "../GridCalender";
 
@@ -46,41 +46,47 @@ export default function CalendarEdit({ navigation }) {
 
   const renderTodoInputs = () => {
     const todoInputs = todos.map((todo, index) => (
-      <Text key={index} style={styles.todoTexts}>
-        할일 {index + 1} {updatedTodos[index] || todo}
-      </Text>
+      <TextInput
+        key={index}
+        value={updatedTodos[index] || todo}
+        onChangeText={(text) => handleTodoChange(text, index)}
+        placeholder={`할일 ${index + 1}`}
+        style={StyleSheet.todoInputs}
+      />
     ));
-    return (
-      <View style={{ flex: 5 }}>
-        <Text style={styles.todoTitle}>할 일들</Text>
-        {todoInputs}
-      </View>
-    );
+    return <View style={{ flex: 5 }}>{todoInputs}</View>;
   };
 
   return (
-    <View style={styles.container}>
-      <View style={styles.header}>
-        <Text style={styles.headerTitle}>Calender</Text>
-      </View>
-      <View style={styles.calView}>
-        <GridCalender
-          selectedDate={selectedDate}
-          year={year}
-          month={month}
-          handleDateSelection={handleDateSelection}
-        />
-      </View>
-      <View style={styles.contentView}>
-        <ContentHeader
-          selectedDate={selectedDate}
-          backButtonOperate={navigateBackScreen}
-          addButtonOperate={addTodo}
-          saveButtonOperate={saveTodo}
-        />
-        {renderTodoInputs()}
-      </View>
-    </View>
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <KeyboardAvoidingView
+        style={{ flex: 1 }}
+        behavior={Platform.select({ ios: "padding" })}
+      >
+        <View style={styles.container}>
+          <View style={styles.header}>
+            <Text style={styles.headerTitle}>Calender</Text>
+          </View>
+          <View style={styles.calView}>
+            <GridCalender
+              selectedDate={selectedDate}
+              year={year}
+              month={month}
+              handleDateSelection={handleDateSelection}
+            />
+          </View>
+          <View style={styles.contentView}>
+            <ContentHeader
+              selectedDate={selectedDate}
+              backButtonOperate={navigateBackScreen}
+              addButtonOperate={addTodo}
+              saveButtonOperate={saveTodo}
+            />
+            {renderTodoInputs()}
+          </View>
+        </View>
+      </KeyboardAvoidingView>
+    </TouchableWithoutFeedback>
   );
 }
 
@@ -115,7 +121,7 @@ const styles = StyleSheet.create({
     color: "#745757",
     marginBottom: 20,
   },
-  todoTexts: {
+  todoInputs: {
     marginBottom: 20,
     fontSize: 25,
     fontWeight: "bold",
