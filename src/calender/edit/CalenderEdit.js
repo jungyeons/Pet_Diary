@@ -1,7 +1,16 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet, TextInput, KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TextInput,
+  KeyboardAvoidingView,
+  TouchableWithoutFeedback,
+  Keyboard,
+} from "react-native";
 import ContentHeader from "./ContentHeader";
 import GridCalender from "../GridCalender";
+import TodoInputs from "../../components/calender/TodoInputs";
 
 export default function CalendarEdit({ navigation }) {
   const [year, setYear] = useState(new Date().getFullYear());
@@ -44,19 +53,6 @@ export default function CalendarEdit({ navigation }) {
     console.log("저장s");
   };
 
-  const renderTodoInputs = () => {
-    const todoInputs = todos.map((todo, index) => (
-      <TextInput
-        key={index}
-        value={updatedTodos[index] || todo}
-        onChangeText={(text) => handleTodoChange(text, index)}
-        placeholder={`할일 ${index + 1}`}
-        style={StyleSheet.todoInputs}
-      />
-    ));
-    return <View style={{ flex: 5 }}>{todoInputs}</View>;
-  };
-
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <KeyboardAvoidingView
@@ -82,7 +78,11 @@ export default function CalendarEdit({ navigation }) {
               addButtonOperate={addTodo}
               saveButtonOperate={saveTodo}
             />
-            {renderTodoInputs()}
+            <TodoInputs
+              todos={todos}
+              updatedTodos={updatedTodos}
+              handleTodoChange={handleTodoChange}
+            />
           </View>
         </View>
       </KeyboardAvoidingView>
@@ -101,30 +101,23 @@ const styles = StyleSheet.create({
     color: "#745757",
   },
   header: {
-    flex: 1,
+    height: 80,
     borderWidth: 1,
     justifyContent: "center",
     alignItems: "center",
   },
   calView: {
     flex: 3,
-    borderWidth: 1,
     marginBottom: 20,
     alignSelf: "center",
   },
   contentView: {
-    flex: 5,
+    flex: 4,
     borderWidth: 1,
   },
   todoTitle: {
     fontWeight: "bold",
     color: "#745757",
     marginBottom: 20,
-  },
-  todoInputs: {
-    marginBottom: 20,
-    fontSize: 25,
-    fontWeight: "bold",
-    color: "#745757",
   },
 });
