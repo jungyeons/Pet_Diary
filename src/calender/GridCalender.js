@@ -72,7 +72,7 @@ const GridCalender = ({ selectedDate, year, month, handleDateSelection }) => {
             flexDirection: "row",
             justifyContent: "center",
             borderWidth: 1,
-            borderColor: "red",
+            borderColor: "green",
           }}
         >
           {row}
