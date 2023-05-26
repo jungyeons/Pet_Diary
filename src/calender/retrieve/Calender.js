@@ -49,7 +49,9 @@ export default function Calendar({ navigation }) {
     ));
     return (
       <View style={{ flex: 5 }}>
-        <Text style={styles.todoTitle}>할 일들</Text>
+        <View>
+          <Text style={styles.todoTitle}>Things to do</Text>
+        </View>
         {todoInputs}
       </View>
     );
@@ -91,17 +93,19 @@ const styles = StyleSheet.create({
   },
   headerTitle: {
     fontSize: 35,
-    color: "#745757",
+    color: "#FFFFFF",
+    fontWeight: "bold",
   },
   header: {
     height: 65,
     borderWidth: 1,
     justifyContent: "center",
     alignItems: "center",
+    backgroundColor: "#745757",
   },
   calView: {
     flex: 3,
-    marginBottom: 20,
+    marginBottom: 5,
     alignSelf: "center",
   },
   contentView: {

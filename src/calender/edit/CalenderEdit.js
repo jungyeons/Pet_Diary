@@ -104,18 +104,20 @@ const styles = StyleSheet.create({
     borderWidth: 1,
   },
   headerTitle: {
+    fontWeight: "bold",
     fontSize: 35,
-    color: "#745757",
+    color: "#FFFFFF",
   },
   header: {
     height: 65,
     borderWidth: 1,
     justifyContent: "center",
     alignItems: "center",
+    backgroundColor: "#745757",
   },
   calView: {
     flex: 3,
-    marginBottom: 20,
+    marginBottom: 5,
     alignSelf: "center",
   },
   contentView: {

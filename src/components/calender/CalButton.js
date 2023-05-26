@@ -1,21 +1,33 @@
 import React from "react";
-import { Pressable, Text } from "react-native";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 import PropTypes from "prop-types";
 
 export const ButtonType = {
   EDIT: "할 일 수정",
-  BACK: "back",
-  ADD: "할 일 추가(최대 5개)",
-  SAVE: "저장",
+  BACK: "Back",
+  ADD: "Add",
+  SAVE: "Save",
 };
 
 const CalButton = ({ buttonType, operate }) => {
   return (
     <Pressable onPressOut={operate}>
-      <Text>{buttonType}</Text>
+      <View style={styles.buttonView}>
+        <Text style={{ fontWeight: "bold" }}>{buttonType}</Text>
+      </View>
     </Pressable>
   );
 };
+
+const styles = StyleSheet.create({
+  buttonView: {
+    borderWidth: 1,
+    marginRight: 10,
+    padding: 5,
+    borderRadius: 12,
+    backgroundColor: "#FFFFFF",
+  },
+});
 
 CalButton.propTypes = {
   buttonType: PropTypes.oneOf(Object.values(ButtonType)).isRequired,

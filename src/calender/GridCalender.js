@@ -75,9 +75,9 @@ const GridCalender = ({
         handleDateSelection={handleDateSelection}
         buttonType={ButtonType.DAY}
         defaultString=""
+        firstDayOfWeek={getFirstDayOfWeek(year, month, day)}
       />
     );
-
     if ((firstDayOfWeek + day) % 7 === 0 || day === daysInMonth) {
       if (day == daysInMonth) {
         for (let i = 0; i < 6 - lastDayOfWeek; i++) {
@@ -90,6 +90,7 @@ const GridCalender = ({
               handleDateSelection={handleDateSelection}
               buttonType={ButtonType.DUMY}
               defaultString=""
+              firstDayOfWeek={getFirstDayOfWeek(year, month, day)}
             />
           );
         }

@@ -14,7 +14,7 @@ const ContentHeader = ({
     <View style={styles.container}>
       {/* 자식 : dateView, feelView, editButtonView */}
       <View style={styles.dateView}>
-        <Text>선택 날짜 : {selectedDate}</Text>
+        <Text style={styles.dateText}>선택 날짜 : {selectedDate}</Text>
       </View>
       <View style={styles.buttonView}>
         <CalButton buttonType={ButtonType.BACK} operate={backButtonOperate} />
@@ -38,6 +38,10 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     borderWidth: 1,
+    backgroundColor: "#745757",
+  },
+  dateText: {
+    color: "#FFFFFF",
   },
   dateView: {
     flex: 1,

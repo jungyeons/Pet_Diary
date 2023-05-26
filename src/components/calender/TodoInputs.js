@@ -15,7 +15,10 @@ const TodoInputs = ({ todos, updatedTodos, handleTodoChange }) => {
   ));
   return (
     <View style={{ flex: 5 }}>
-      <Text style={styles.todoTitle}>할 일들</Text>
+      <View style={styles.todoTitleView}>
+        <View style={{ marginBottom: 5 }}></View>
+        <Text style={styles.todoTitle}>Things to do</Text>
+      </View>
       {todoInputs}
     </View>
   );
@@ -28,10 +31,20 @@ TodoInputs.propTypes = {
 };
 
 const styles = StyleSheet.create({
+  todoTitleView: {
+    borderWidth: 1,
+    width: 100,
+    height: 30,
+    marginBottom: 10,
+    marginTop: 2,
+    borderRadius: 12,
+    alignItems: "center",
+    backgroundColor: "#745757",
+  },
   todoTitle: {
+    fontSize: 15,
     fontWeight: "bold",
-    color: "#745757",
-    marginBottom: 20,
+    color: "#FFFFFF",
   },
   todoInputs: {
     marginBottom: 15,
