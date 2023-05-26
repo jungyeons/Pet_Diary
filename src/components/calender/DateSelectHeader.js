@@ -39,13 +39,14 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     width: 54,
-    height: 30,
-    borderWidth: 1,
+    height: 35,
+    backgroundColor: "#745757",
   },
   textStyles: {
     textAlign: "center",
-    color: "black",
+    color: "#FFFFFF",
     fontWeight: "bold",
+    fontSize: 16,
   },
 });
 

@@ -57,6 +57,7 @@ export default function CalendarEdit({ navigation }) {
 
   return (
     <ScrollView>
+      <View style={{ marginBottom: 40 }}></View>
       <View style={styles.container}>
         <View style={styles.header}>
           <Text style={styles.headerTitle}>Calender</Text>
@@ -101,26 +102,24 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: "center",
-    borderWidth: 1,
   },
   headerTitle: {
-    fontSize: 35,
-    color: "#745757",
+    fontWeight: "bold",
+    fontSize: 30,
+    color: "#000000",
   },
   header: {
     height: 65,
-    borderWidth: 1,
     justifyContent: "center",
     alignItems: "center",
   },
   calView: {
     flex: 3,
-    marginBottom: 20,
+    marginBottom: 5,
     alignSelf: "center",
   },
   contentView: {
     flex: 3,
-    borderWidth: 1,
   },
   todoTitle: {
     fontWeight: "bold",

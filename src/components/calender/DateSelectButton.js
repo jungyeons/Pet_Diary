@@ -14,6 +14,7 @@ const DateSelectButton = ({
   month,
   day,
   defaultString,
+  firstDayOfWeek,
 }) => {
   const date = `${year}년 ${month}월 ${day}일`;
   return (
@@ -31,7 +32,9 @@ const DateSelectButton = ({
       ]}
     >
       <View key={day} style={styles.buttonStyle}>
-        <Text> {buttonType == ButtonType.DAY ? day : defaultString} </Text>
+        <Text style={{ color: firstDayOfWeek == 0 ? "red" : "black" }}>
+          {buttonType == ButtonType.DAY ? day : defaultString}
+        </Text>
       </View>
     </Pressable>
   );
@@ -44,15 +47,17 @@ DateSelectButton.propTypes = {
   month: PropTypes.number.isRequired,
   day: PropTypes.number.isRequired,
   defaultString: PropTypes.string.isRequired,
+  firstDayOfWeek: PropTypes.number.isRequired,
 };
 
 const styles = StyleSheet.create({
   buttonStyle: {
     width: 54,
-    height: 41,
+    height: 43,
     borderWidth: 1,
     justifyContent: "center",
     alignItems: "center",
+    borderColor: "#745757",
   },
 });
 
