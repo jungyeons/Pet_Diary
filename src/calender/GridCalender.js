@@ -60,6 +60,7 @@ const GridCalender = ({
           handleDateSelection={handleDateSelection}
           buttonType={ButtonType.DUMY}
           defaultString=""
+          firstDayOfWeek={-1}
         />
       );
     }
@@ -90,7 +91,7 @@ const GridCalender = ({
               handleDateSelection={handleDateSelection}
               buttonType={ButtonType.DUMY}
               defaultString=""
-              firstDayOfWeek={getFirstDayOfWeek(year, month, day)}
+              firstDayOfWeek={-1}
             />
           );
         }
@@ -102,6 +103,7 @@ const GridCalender = ({
           style={{
             flexDirection: "row",
             justifyContent: isFirst ? "flex-end" : "flex-start",
+            borderColor: "#745757",
           }}
         >
           {row}
@@ -128,7 +130,7 @@ const GridCalender = ({
         />
       </View>
       <View style={{ marginBottom: 7 }}></View>
-      <View style={{ borderWidth: 1 }}>{calendar}</View>
+      <View style={{ borderWidth: 1, borderColor: "#745757" }}>{calendar}</View>
     </View>
   );
 };

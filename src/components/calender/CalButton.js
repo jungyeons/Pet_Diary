@@ -13,7 +13,7 @@ const CalButton = ({ buttonType, operate }) => {
   return (
     <Pressable onPressOut={operate}>
       <View style={styles.buttonView}>
-        <Text style={{ fontWeight: "bold" }}>{buttonType}</Text>
+        <Text style={styles.buttonText}>{buttonType}</Text>
       </View>
     </Pressable>
   );
@@ -21,11 +21,16 @@ const CalButton = ({ buttonType, operate }) => {
 
 const styles = StyleSheet.create({
   buttonView: {
-    borderWidth: 1,
-    marginRight: 10,
-    padding: 5,
+    paddingHorizontal: 12,
+    paddingVertical: 5,
     borderRadius: 12,
-    backgroundColor: "#FFFFFF",
+    backgroundColor: "#745757",
+    flexDirection: "column",
+    alignItems: "center",
+  },
+  buttonText: {
+    fontWeight: "bold",
+    color: "#FFFFFF",
   },
 });
 

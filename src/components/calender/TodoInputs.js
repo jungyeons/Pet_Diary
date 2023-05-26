@@ -8,9 +8,9 @@ const TodoInputs = ({ todos, updatedTodos, handleTodoChange }) => {
       key={index}
       value={updatedTodos[index] || todo}
       onChangeText={(text) => handleTodoChange(text, index)}
-      placeholder={`(할일 ${index + 1} 입력)`}
+      placeholder={"할일을 입력해 주세요"}
       style={styles.todoInputs}
-      placeholderTextColor={"#D2B48C"}
+      placeholderTextColor={"#808080"}
     />
   ));
   return (
@@ -32,7 +32,6 @@ TodoInputs.propTypes = {
 
 const styles = StyleSheet.create({
   todoTitleView: {
-    borderWidth: 1,
     width: 100,
     height: 30,
     marginBottom: 10,
@@ -40,6 +39,7 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     alignItems: "center",
     backgroundColor: "#745757",
+    marginLeft: 3,
   },
   todoTitle: {
     fontSize: 15,
@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
     color: "#FFFFFF",
   },
   todoInputs: {
-    marginBottom: 15,
+    marginBottom: 30,
     fontSize: 20,
     fontWeight: "bold",
     color: "#745757",

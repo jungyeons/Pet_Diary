@@ -53,10 +53,11 @@ DateSelectButton.propTypes = {
 const styles = StyleSheet.create({
   buttonStyle: {
     width: 54,
-    height: 41,
+    height: 43,
     borderWidth: 1,
     justifyContent: "center",
     alignItems: "center",
+    borderColor: "#745757",
   },
 });
 

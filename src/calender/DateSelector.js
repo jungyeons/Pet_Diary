@@ -12,15 +12,15 @@ const DateSelector = ({ selectorType, operate, dateValue }) => {
   return (
     <View style={{ flexDirection: "row" }}>
       <Pressable onPressOut={() => operate(dateValue - 1)} hitSlop={3}>
-        <AntDesign name="caretleft" size={22} color="black" />
+        <AntDesign name="left" size={20} color="black" />
       </Pressable>
-      <Text style={{ fontSize: 15, color: "black" }}>
+      <Text style={{ fontSize: 15, color: "black", fontWeight: "bold" }}>
         {"  "}
         {dateValue}
         {selectorType}
       </Text>
       <Pressable onPressOut={() => operate(dateValue + 1)} hitSlop={3}>
-        <AntDesign name="caretright" size={22} color="black" />
+        <AntDesign name="right" size={20} color="black" />
       </Pressable>
     </View>
   );

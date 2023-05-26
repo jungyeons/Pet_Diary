@@ -18,8 +18,11 @@ const ContentHeader = ({
       </View>
       <View style={styles.buttonView}>
         <CalButton buttonType={ButtonType.BACK} operate={backButtonOperate} />
+        <View style={{ marginRight: 15 }}></View>
         <CalButton buttonType={ButtonType.ADD} operate={addButtonOperate} />
+        <View style={{ marginRight: 15 }}></View>
         <CalButton buttonType={ButtonType.SAVE} operate={saveButtonOperate} />
+        <View style={{ marginRight: 15 }}></View>
       </View>
     </View>
   );
@@ -37,11 +40,12 @@ const styles = StyleSheet.create({
     height: 50,
     flexDirection: "row",
     alignItems: "center",
-    borderWidth: 1,
-    backgroundColor: "#745757",
+    // backgroundColor: "#745757",
   },
   dateText: {
-    color: "#FFFFFF",
+    color: "#000000",
+    fontSize: 16,
+    fontWeight: "bold",
   },
   dateView: {
     flex: 1,
@@ -49,7 +53,7 @@ const styles = StyleSheet.create({
   buttonView: {
     flex: 1,
     flexDirection: "row",
-    justifyContent: "space-evenly",
+    justifyContent: "center",
   },
 });
 

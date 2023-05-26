@@ -32,24 +32,28 @@ const styles = StyleSheet.create({
     height: 50,
     flexDirection: "row",
     alignItems: "center",
-    borderWidth: 1,
-    backgroundColor: "#745757",
+    // backgroundColor: "#745757",
   },
   dateView: {
     flex: 2,
   },
   dateText: {
-    color: "#FFFFFF",
+    color: "#000000",
+    fontWeight: "bold",
+    fontSize: 16,
   },
   todayFeel: {
-    color: "#FFFFFF",
+    color: "#000000",
     fontWeight: "bold",
   },
   feelView: {
     flex: 1,
+    flexDirection: "column",
+    alignItems: "center",
   },
   editButtonView: {
     flex: 1,
+    paddingRight: 5,
   },
 });
 

@@ -49,7 +49,8 @@ export default function Calendar({ navigation }) {
     ));
     return (
       <View style={{ flex: 5 }}>
-        <View>
+        <View style={styles.todoTitleView}>
+          <View style={{ marginBottom: 5 }}></View>
           <Text style={styles.todoTitle}>Things to do</Text>
         </View>
         {todoInputs}
@@ -59,6 +60,7 @@ export default function Calendar({ navigation }) {
 
   return (
     <ScrollView>
+      <View style={{ marginBottom: 40 }}></View>
       <View style={styles.container}>
         <View style={styles.header}>
           <Text style={styles.headerTitle}>Calender</Text>
@@ -86,22 +88,29 @@ export default function Calendar({ navigation }) {
 }
 
 const styles = StyleSheet.create({
+  todoTitleView: {
+    width: 100,
+    height: 30,
+    marginBottom: 10,
+    marginTop: 2,
+    borderRadius: 12,
+    alignItems: "center",
+    backgroundColor: "#745757",
+    marginLeft: 3,
+  },
   container: {
     flex: 1,
     justifyContent: "center",
-    borderWidth: 1,
   },
   headerTitle: {
-    fontSize: 35,
-    color: "#FFFFFF",
+    fontSize: 30,
+    color: "#000000",
     fontWeight: "bold",
   },
   header: {
     height: 65,
-    borderWidth: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#745757",
   },
   calView: {
     flex: 3,
@@ -110,15 +119,14 @@ const styles = StyleSheet.create({
   },
   contentView: {
     flex: 3,
-    borderWidth: 1,
   },
   todoTitle: {
+    fontSize: 15,
     fontWeight: "bold",
-    color: "#745757",
-    marginBottom: 20,
+    color: "#FFFFFF",
   },
   todoTexts: {
-    marginBottom: 15,
+    marginBottom: 30,
     fontSize: 20,
     fontWeight: "bold",
     color: "#745757",
