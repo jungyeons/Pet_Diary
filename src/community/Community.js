@@ -7,19 +7,16 @@ const Community = () => {
     <div style={styles.App}>
       <h1>애완동물 게시판</h1>
       <div style={styles.container}>
-        {viewContent.map((element) => (
-          <div style={{ border: "1px solid #333" }}>
-            <h2>제목</h2>
-            <div>내용</div>
-          </div>
-        ))}
+        <div style={{ border: "1px solid #333" }}>
+          <h2>제목</h2>
+          <div>내용</div>
+        </div>
       </div>
       <div style={styles.formwrapper}>
         <input
           style={styles.titleinput}
           type="text"
           placeholder="제목"
-          onChange={getValue}
           name="title"
         />
         <CKEditor
@@ -41,9 +38,7 @@ const Community = () => {
           }}
         />
       </div>
-      <button style={styles.submitbutton} onClick={submitReview}>
-        등록
-      </button>
+      <button style={styles.submitbutton}>등록</button>
     </div>
   );
 };
