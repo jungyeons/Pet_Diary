@@ -1,12 +1,15 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, ScrollView } from "react-native";
 import ContentHeader from "./ContentHeader";
 import GridCalender from "../GridCalender";
+import {
+  selectedDate,
+  setSelectedDate,
+} from "../../components/calender/DateStateManager";
 
 export default function Calendar({ navigation }) {
   const [year, setYear] = useState(new Date().getFullYear());
   const [month, setMonth] = useState(new Date().getMonth() + 1);
-  const [selectedDate, setSelectedDate] = useState("");
   const [todos, setTodos] = useState(Array(5).fill(""));
   const [updatedTodos, setUpdatedTodos] = useState([]);
 
@@ -18,7 +21,13 @@ export default function Calendar({ navigation }) {
   };
 
   const handleMonthChange = (newMonth) => {
-    setMonth(newMonth);
+    if (newMonth == 0) {
+      setYear(year - 1);
+      setMonth(12);
+    } else if (newMonth == 13) {
+      setYear(year + 1);
+      setMonth(1);
+    } else setMonth(newMonth);
     setSelectedDate("");
     setTodos(Array(5).fill(""));
   };
@@ -26,12 +35,6 @@ export default function Calendar({ navigation }) {
   const handleDateSelection = (date) => {
     setSelectedDate(date);
     setUpdatedTodos(Array(5).fill(""));
-  };
-
-  const handleTodoChange = (text, index) => {
-    const updatedTodos = [...updatedTodos];
-    updatedTodos[index] = text;
-    setUpdatedTodos(updatedTodos);
   };
   // 수정창 전환
   const navigateEditScreen = () => {
@@ -53,26 +56,30 @@ export default function Calendar({ navigation }) {
   };
 
   return (
-    <View style={styles.container}>
-      <View style={styles.header}>
-        <Text style={styles.headerTitle}>Calender</Text>
+    <ScrollView>
+      <View style={styles.container}>
+        <View style={styles.header}>
+          <Text style={styles.headerTitle}>Calender</Text>
+        </View>
+        <View style={styles.calView}>
+          <GridCalender
+            selectedDate={selectedDate}
+            year={year}
+            month={month}
+            handleDateSelection={handleDateSelection}
+            handleMonthChange={handleMonthChange}
+            handleYearChange={handleYearChange}
+          />
+        </View>
+        <View style={styles.contentView}>
+          <ContentHeader
+            selectedDate={selectedDate}
+            buttonOperate={navigateEditScreen}
+          />
+          {renderTodoInputs()}
+        </View>
       </View>
-      <View style={styles.calView}>
-        <GridCalender
-          selectedDate={selectedDate}
-          year={year}
-          month={month}
-          handleDateSelection={handleDateSelection}
-        />
-      </View>
-      <View style={styles.contentView}>
-        <ContentHeader
-          selectedDate={selectedDate}
-          buttonOperate={navigateEditScreen}
-        />
-        {renderTodoInputs()}
-      </View>
-    </View>
+    </ScrollView>
   );
 }
 
@@ -83,11 +90,11 @@ const styles = StyleSheet.create({
     borderWidth: 1,
   },
   headerTitle: {
-    fontSize: 40,
+    fontSize: 35,
     color: "#745757",
   },
   header: {
-    height: 80,
+    height: 65,
     borderWidth: 1,
     justifyContent: "center",
     alignItems: "center",
@@ -98,7 +105,7 @@ const styles = StyleSheet.create({
     alignSelf: "center",
   },
   contentView: {
-    flex: 4,
+    flex: 3,
     borderWidth: 1,
   },
   todoTitle: {
@@ -108,7 +115,7 @@ const styles = StyleSheet.create({
   },
   todoTexts: {
     marginBottom: 15,
-    fontSize: 25,
+    fontSize: 20,
     fontWeight: "bold",
     color: "#745757",
   },

@@ -1,21 +1,16 @@
 import React, { useState } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  TextInput,
-  KeyboardAvoidingView,
-  TouchableWithoutFeedback,
-  Keyboard,
-} from "react-native";
+import { View, Text, StyleSheet, ScrollView } from "react-native";
 import ContentHeader from "./ContentHeader";
 import GridCalender from "../GridCalender";
 import TodoInputs from "../../components/calender/TodoInputs";
+import {
+  selectedDate,
+  setSelectedDate,
+} from "../../components/calender/DateStateManager";
 
 export default function CalendarEdit({ navigation }) {
   const [year, setYear] = useState(new Date().getFullYear());
   const [month, setMonth] = useState(new Date().getMonth() + 1);
-  const [selectedDate, setSelectedDate] = useState("");
   const [todos, setTodos] = useState(Array(5).fill(""));
   const [updatedTodos, setUpdatedTodos] = useState([]);
 
@@ -27,7 +22,13 @@ export default function CalendarEdit({ navigation }) {
   };
 
   const handleMonthChange = (newMonth) => {
-    setMonth(newMonth);
+    if (newMonth == 0) {
+      setYear(year - 1);
+      setMonth(12);
+    } else if (newMonth == 13) {
+      setYear(year + 1);
+      setMonth(1);
+    } else setMonth(newMonth);
     setSelectedDate("");
     setTodos(Array(5).fill(""));
   };
@@ -40,6 +41,7 @@ export default function CalendarEdit({ navigation }) {
   const handleTodoChange = (text, index) => {
     const updatedTodos = [...updatedTodos];
     updatedTodos[index] = text;
+    console.log(text + ", " + index);
     setUpdatedTodos(updatedTodos);
   };
   // 조회창 전환
@@ -54,39 +56,44 @@ export default function CalendarEdit({ navigation }) {
   };
 
   return (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <KeyboardAvoidingView
-        style={{ flex: 1 }}
-        behavior={Platform.select({ ios: "padding" })}
-      >
-        <View style={styles.container}>
-          <View style={styles.header}>
-            <Text style={styles.headerTitle}>Calender</Text>
-          </View>
-          <View style={styles.calView}>
-            <GridCalender
-              selectedDate={selectedDate}
-              year={year}
-              month={month}
-              handleDateSelection={handleDateSelection}
-            />
-          </View>
-          <View style={styles.contentView}>
-            <ContentHeader
-              selectedDate={selectedDate}
-              backButtonOperate={navigateBackScreen}
-              addButtonOperate={addTodo}
-              saveButtonOperate={saveTodo}
-            />
-            <TodoInputs
-              todos={todos}
-              updatedTodos={updatedTodos}
-              handleTodoChange={handleTodoChange}
-            />
-          </View>
+    <ScrollView>
+      <View style={styles.container}>
+        <View style={styles.header}>
+          <Text style={styles.headerTitle}>Calender</Text>
         </View>
-      </KeyboardAvoidingView>
-    </TouchableWithoutFeedback>
+        <View style={styles.calView}>
+          <GridCalender
+            selectedDate={selectedDate}
+            year={year}
+            month={month}
+            handleDateSelection={handleDateSelection}
+            handleMonthChange={handleMonthChange}
+            handleYearChange={handleYearChange}
+          />
+        </View>
+        <View style={styles.contentView}>
+          <ContentHeader
+            selectedDate={selectedDate}
+            backButtonOperate={navigateBackScreen}
+            addButtonOperate={addTodo}
+            saveButtonOperate={saveTodo}
+          />
+          <TodoInputs
+            todos={todos}
+            updatedTodos={updatedTodos}
+            handleTodoChange={handleTodoChange}
+          />
+        </View>
+      </View>
+    </ScrollView>
+    // <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+    //   <KeyboardAvoidingView
+    //     style={{ flex: 1 }}
+    //     behavior={Platform.select({ ios: "padding" })}
+    //   >
+
+    //   </KeyboardAvoidingView>
+    // </TouchableWithoutFeedback>
   );
 }
 
@@ -97,11 +104,11 @@ const styles = StyleSheet.create({
     borderWidth: 1,
   },
   headerTitle: {
-    fontSize: 40,
+    fontSize: 35,
     color: "#745757",
   },
   header: {
-    height: 80,
+    height: 65,
     borderWidth: 1,
     justifyContent: "center",
     alignItems: "center",
@@ -112,7 +119,7 @@ const styles = StyleSheet.create({
     alignSelf: "center",
   },
   contentView: {
-    flex: 4,
+    flex: 3,
     borderWidth: 1,
   },
   todoTitle: {
