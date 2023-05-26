@@ -19,7 +19,6 @@ const Community = () => {
           style={styles.titleinput}
           type="text"
           placeholder="제목"
-          onChange={getValue}
           name="title"
         />
         <CKEditor
@@ -41,9 +40,7 @@ const Community = () => {
           }}
         />
       </div>
-      <button style={styles.submitbutton} onClick={submitReview}>
-        등록
-      </button>
+      <button style={styles.submitbutton}>등록</button>
     </div>
   );
 };
