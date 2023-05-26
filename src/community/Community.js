@@ -2,7 +2,7 @@ import { StyleSheet } from "react-native";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 
-function App() {
+const Community = () => {
   return (
     <div style={styles.App}>
       <h1>애완동물 게시판</h1>
@@ -46,7 +46,7 @@ function App() {
       </button>
     </div>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -106,4 +106,4 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
 });
-export default App;
+export default Community;
