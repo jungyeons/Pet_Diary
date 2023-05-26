@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
   },
   todoInputs: {
     marginBottom: 15,
-    fontSize: 25,
+    fontSize: 20,
     fontWeight: "bold",
     color: "#745757",
   },

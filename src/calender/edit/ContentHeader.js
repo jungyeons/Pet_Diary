@@ -34,7 +34,7 @@ ContentHeader.propTypes = {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    height: 50,
     flexDirection: "row",
     alignItems: "center",
     borderWidth: 1,

@@ -2,16 +2,29 @@ import React from "react";
 import { Text, View } from "react-native";
 import PropTypes from "prop-types";
 import DateSelectHeader from "../components/calender/DateSelectHeader";
-import DateSelectButton from "../components/calender/DateSelectButton";
+import DateSelectButton, {
+  ButtonType,
+} from "../components/calender/DateSelectButton";
+import DateSelector, { SelectTypes } from "./DateSelector";
 
-const GridCalender = ({ selectedDate, year, month, handleDateSelection }) => {
+const GridCalender = ({
+  selectedDate,
+  year,
+  month,
+  handleDateSelection,
+  handleMonthChange,
+  handleYearChange,
+}) => {
   // 월별 일수 계산 함수
   const getDaysInMonth = (year, month) => {
     return new Date(year, month, 0).getDate();
   };
 
   // 요일 계산 함수 (0: 일요일 ~ 6: 토요일)
-  const getDayOfWeek = (year, month, day) => {
+  const getFirstDayOfWeek = (year, month, day) => {
+    return new Date(year, month - 1, day).getDay();
+  };
+  const getLastDayOfWeek = (year, month, day) => {
     return new Date(year, month - 1, day).getDay();
   };
 
@@ -24,16 +37,32 @@ const GridCalender = ({ selectedDate, year, month, handleDateSelection }) => {
   };
 
   const daysInMonth = getDaysInMonth(year, month);
-  const firstDayOfWeek = getDayOfWeek(year, month, 1);
+  const firstDayOfWeek = getFirstDayOfWeek(year, month, 1);
+  const lastDayOfWeek = getLastDayOfWeek(year, month, daysInMonth);
 
   const calendar = [];
   // 요일 헤더
   calendar.push(<DateSelectHeader key={"weekDayView"} />);
-
   // 날짜 출력
   let row = [];
+  let isFirst = true;
   for (let i = 0; i < firstDayOfWeek; i++) {
     row.push(<Text key={`empty-${i}`} />);
+  }
+  if (isFirst) {
+    for (let i = 0; i < firstDayOfWeek; i++) {
+      row.push(
+        <DateSelectButton
+          key={i + " DUMY"}
+          year={year}
+          month={month}
+          day={-1}
+          handleDateSelection={handleDateSelection}
+          buttonType={ButtonType.DUMY}
+          defaultString=""
+        />
+      );
+    }
   }
   for (let day = 1; day <= daysInMonth; day++) {
     const date = `${year}-${month}-${day}`;
@@ -44,21 +73,40 @@ const GridCalender = ({ selectedDate, year, month, handleDateSelection }) => {
         month={month}
         day={day}
         handleDateSelection={handleDateSelection}
+        buttonType={ButtonType.DAY}
+        defaultString=""
       />
     );
 
     if ((firstDayOfWeek + day) % 7 === 0 || day === daysInMonth) {
+      if (day == daysInMonth) {
+        for (let i = 0; i < 6 - lastDayOfWeek; i++) {
+          row.push(
+            <DateSelectButton
+              key={i + " DUMY"}
+              year={year}
+              month={month}
+              day={-1}
+              handleDateSelection={handleDateSelection}
+              buttonType={ButtonType.DUMY}
+              defaultString=""
+            />
+          );
+        }
+      }
+      // firstDayOfWeek : 한 주의 첫 일
       calendar.push(
         <View
           key={day}
           style={{
             flexDirection: "row",
-            justifyContent: "flex-start",
+            justifyContent: isFirst ? "flex-end" : "flex-start",
           }}
         >
           {row}
         </View>
       );
+      isFirst = false;
       row = [];
     }
   }
@@ -67,11 +115,19 @@ const GridCalender = ({ selectedDate, year, month, handleDateSelection }) => {
     <View>
       <View style={{ marginBottom: 7 }}></View>
       <View style={{ flexDirection: "row", justifyContent: "space-around" }}>
-        <Text>년도지정</Text>
-        <Text>월지정</Text>
+        <DateSelector
+          selectorType={SelectTypes.YEAR}
+          operate={handleYearChange}
+          dateValue={year}
+        />
+        <DateSelector
+          selectorType={SelectTypes.MONTH}
+          operate={handleMonthChange}
+          dateValue={month}
+        />
       </View>
       <View style={{ marginBottom: 7 }}></View>
-      <View>{calendar}</View>
+      <View style={{ borderWidth: 1 }}>{calendar}</View>
     </View>
   );
 };
@@ -81,6 +137,8 @@ GridCalender.propTypes = {
   year: PropTypes.number.isRequired,
   month: PropTypes.number.isRequired,
   handleDateSelection: PropTypes.func.isRequired,
+  handleMonthChange: PropTypes.func.isRequired,
+  handleYearChange: PropTypes.func.isRequired,
 };
 
 export default GridCalender;
