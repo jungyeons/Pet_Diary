@@ -9,10 +9,10 @@ const ContentHeader = ({ selectedDate, buttonOperate }) => {
     <View style={styles.container}>
       {/* 자식 : dateView, feelView, editButtonView */}
       <View style={styles.dateView}>
-        <Text>선택 날짜 : {selectedDate}</Text>
+        <Text style={styles.dateText}>선택 날짜 : {selectedDate}</Text>
       </View>
       <View style={styles.feelView}>
-        <Text>오늘 기분은?</Text>
+        <Text style={styles.todayFeel}>오늘 기분은?</Text>
         <Text>드롭 다운</Text>
       </View>
       <View style={styles.editButtonView}>
@@ -32,16 +32,28 @@ const styles = StyleSheet.create({
     height: 50,
     flexDirection: "row",
     alignItems: "center",
-    borderWidth: 1,
+    // backgroundColor: "#745757",
   },
   dateView: {
     flex: 2,
   },
+  dateText: {
+    color: "#000000",
+    fontWeight: "bold",
+    fontSize: 16,
+  },
+  todayFeel: {
+    color: "#000000",
+    fontWeight: "bold",
+  },
   feelView: {
     flex: 1,
+    flexDirection: "column",
+    alignItems: "center",
   },
   editButtonView: {
     flex: 1,
+    paddingRight: 5,
   },
 });
 

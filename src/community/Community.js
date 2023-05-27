@@ -1,47 +1,50 @@
-import { StyleSheet } from "react-native";
-import { CKEditor } from "@ckeditor/ckeditor5-react";
-import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+import React from "react";
+import { StyleSheet, Text, View } from "react-native";
+// import { CKEditor } from "@ckeditor/ckeditor5-react";
+// import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 
 const Community = () => {
   return (
-    <div style={styles.App}>
-      <h1>애완동물 게시판</h1>
-      <div style={styles.container}>
-        {viewContent.map((element) => (
-          <div style={{ border: "1px solid #333" }}>
-            <h2>제목</h2>
-            <div>내용</div>
-          </div>
-        ))}
-      </div>
-      <div style={styles.formwrapper}>
-        <input
-          style={styles.titleinput}
-          type="text"
-          placeholder="제목"
-          name="title"
-        />
-        <CKEditor
-          editor={ClassicEditor}
-          data="<p>Hello from CKEditor 5!</p>"
-          onReady={(editor) => {
-            // You can store the "editor" and use when it is needed.
-            console.log("Editor is ready to use!", editor);
-          }}
-          onChange={(event, editor) => {
-            const data = editor.getData();
-            console.log({ event, editor, data });
-          }}
-          onBlur={(event, editor) => {
-            console.log("Blur.", editor);
-          }}
-          onFocus={(event, editor) => {
-            console.log("Focus.", editor);
-          }}
-        />
-      </div>
-      <button style={styles.submitbutton}>등록</button>
-    </div>
+    <View style={styles.container}>
+      <View style={{ marginBottom: 40 }}></View>
+      <Text style={styles.styledText}>커뮤니티s</Text>
+    </View>
+    // <div style={styles.App}>
+    //   <h1>애완동물 게시판</h1>
+    //   <div style={styles.container}>
+    //     <div style={{ border: "1px solid #333" }}>
+    //       <h2>제목</h2>
+    //       <div>내용</div>
+    //     </div>
+    //   </div>
+    //   <div style={styles.formwrapper}>
+    //     <input
+    //       style={styles.titleinput}
+    //       type="text"
+    //       placeholder="제목"
+    //       name="title"
+    //     />
+    //     <CKEditor
+    //       editor={ClassicEditor}
+    //       data="<p>Hello from CKEditor 5!</p>"
+    //       onReady={(editor) => {
+    //         // You can store the "editor" and use when it is needed.
+    //         console.log("Editor is ready to use!", editor);
+    //       }}
+    //       onChange={(event, editor) => {
+    //         const data = editor.getData();
+    //         console.log({ event, editor, data });
+    //       }}
+    //       onBlur={(event, editor) => {
+    //         console.log("Blur.", editor);
+    //       }}
+    //       onFocus={(event, editor) => {
+    //         console.log("Focus.", editor);
+    //       }}
+    //     />
+    //   </div>
+    //   <button style={styles.submitbutton}>등록</button>
+    // </div>
   );
 };
 
