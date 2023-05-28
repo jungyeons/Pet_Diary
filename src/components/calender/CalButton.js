@@ -21,7 +21,7 @@ const CalButton = ({ buttonType, operate }) => {
 
 const styles = StyleSheet.create({
   buttonView: {
-    paddingHorizontal: 12,
+    paddingHorizontal: 16,
     paddingVertical: 5,
     borderRadius: 12,
     backgroundColor: "#745757",

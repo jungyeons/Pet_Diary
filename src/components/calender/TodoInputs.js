@@ -14,7 +14,7 @@ const TodoInputs = ({ todos, updatedTodos, handleTodoChange }) => {
     />
   ));
   return (
-    <View style={{ flex: 5 }}>
+    <View style={{ flex: 5, marginLeft: 10 }}>
       <View style={styles.todoTitleView}>
         <View style={{ marginBottom: 5 }}></View>
         <Text style={styles.todoTitle}>Things to do</Text>
@@ -34,11 +34,11 @@ const styles = StyleSheet.create({
   todoTitleView: {
     width: 100,
     height: 30,
-    marginBottom: 10,
-    marginTop: 2,
     borderRadius: 12,
+    marginBottom: 18,
+    marginTop: 2,
     alignItems: "center",
-    backgroundColor: "#745757",
+    backgroundColor: "#D2B48C",
     marginLeft: 3,
   },
   todoTitle: {

@@ -1,19 +1,21 @@
-import React, { useState } from "react";
-import { View, Text, StyleSheet, ScrollView } from "react-native";
+/* eslint-disable react/prop-types */
+import React, { useEffect, useState } from "react";
+import { View, Text, StyleSheet, ScrollView, Pressable } from "react-native";
 import ContentHeader from "./ContentHeader";
 import GridCalender from "../GridCalender";
 import TodoInputs from "../../components/calender/TodoInputs";
-import {
-  selectedDate,
-  setSelectedDate,
-} from "../../components/calender/DateStateManager";
+import { AntDesign } from "@expo/vector-icons";
 
-export default function CalendarEdit({ navigation }) {
+export default function CalendarEdit({ navigation, route }) {
   const [year, setYear] = useState(new Date().getFullYear());
   const [month, setMonth] = useState(new Date().getMonth() + 1);
+  const [selectedDate, setSelectedDate] = useState("");
   const [todos, setTodos] = useState(Array(5).fill(""));
   const [updatedTodos, setUpdatedTodos] = useState([]);
-
+  useEffect(() => {
+    if (route.params != undefined)
+      handleDateSelection(route.params.date.selectedDate);
+  }, [route.params]);
   const handleYearChange = (newYear) => {
     setYear(newYear);
     setMonth(1); // 해당 연도의 1월 1일로 자동 선택
@@ -46,7 +48,7 @@ export default function CalendarEdit({ navigation }) {
   };
   // 조회창 전환
   const navigateBackScreen = () => {
-    navigation.navigate("Retrieve");
+    navigation.navigate("Retrieve", { date: { selectedDate } });
   };
   const addTodo = () => {
     console.log("할 일 추가s");
@@ -54,13 +56,18 @@ export default function CalendarEdit({ navigation }) {
   const saveTodo = () => {
     console.log("저장s");
   };
-
   return (
     <ScrollView>
       <View style={{ marginBottom: 40 }}></View>
       <View style={styles.container}>
         <View style={styles.header}>
+          <Pressable onPressOut={navigateBackScreen} hitSlop={15}>
+            <View style={{ width: 20, marginLeft: 5 }}>
+              <AntDesign name="left" size={30} color="black" />
+            </View>
+          </Pressable>
           <Text style={styles.headerTitle}>Calender</Text>
+          <View style={{ width: 20, marginRight: 5 }}></View>
         </View>
         <View style={styles.calView}>
           <GridCalender
@@ -75,7 +82,6 @@ export default function CalendarEdit({ navigation }) {
         <View style={styles.contentView}>
           <ContentHeader
             selectedDate={selectedDate}
-            backButtonOperate={navigateBackScreen}
             addButtonOperate={addTodo}
             saveButtonOperate={saveTodo}
           />
@@ -110,7 +116,8 @@ const styles = StyleSheet.create({
   },
   header: {
     height: 65,
-    justifyContent: "center",
+    flexDirection: "row",
+    justifyContent: "space-between",
     alignItems: "center",
   },
   calView: {

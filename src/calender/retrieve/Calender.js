@@ -1,18 +1,19 @@
-import React, { useState } from "react";
+/* eslint-disable react/prop-types */
+import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet, ScrollView } from "react-native";
 import ContentHeader from "./ContentHeader";
 import GridCalender from "../GridCalender";
-import {
-  selectedDate,
-  setSelectedDate,
-} from "../../components/calender/DateStateManager";
 
-export default function Calendar({ navigation }) {
+export default function Calendar({ navigation, route }) {
   const [year, setYear] = useState(new Date().getFullYear());
   const [month, setMonth] = useState(new Date().getMonth() + 1);
+  const [selectedDate, setSelectedDate] = useState("");
   const [todos, setTodos] = useState(Array(5).fill(""));
   const [updatedTodos, setUpdatedTodos] = useState([]);
-
+  useEffect(() => {
+    if (route.params != undefined)
+      handleDateSelection(route.params.date.selectedDate);
+  }, [route.params]);
   const handleYearChange = (newYear) => {
     setYear(newYear);
     setMonth(1); // 해당 연도의 1월 1일로 자동 선택
@@ -38,7 +39,7 @@ export default function Calendar({ navigation }) {
   };
   // 수정창 전환
   const navigateEditScreen = () => {
-    navigation.navigate("Edit");
+    navigation.navigate("Edit", { date: { selectedDate } });
   };
 
   const renderTodoInputs = () => {
@@ -48,7 +49,7 @@ export default function Calendar({ navigation }) {
       </Text>
     ));
     return (
-      <View style={{ flex: 5 }}>
+      <View style={{ flex: 5, marginLeft: 10 }}>
         <View style={styles.todoTitleView}>
           <View style={{ marginBottom: 5 }}></View>
           <Text style={styles.todoTitle}>Things to do</Text>
@@ -57,7 +58,6 @@ export default function Calendar({ navigation }) {
       </View>
     );
   };
-
   return (
     <ScrollView>
       <View style={{ marginBottom: 40 }}></View>
@@ -91,11 +91,11 @@ const styles = StyleSheet.create({
   todoTitleView: {
     width: 100,
     height: 30,
-    marginBottom: 10,
+    marginBottom: 20,
     marginTop: 2,
     borderRadius: 12,
     alignItems: "center",
-    backgroundColor: "#745757",
+    backgroundColor: "#D2B48C",
     marginLeft: 3,
   },
   container: {
