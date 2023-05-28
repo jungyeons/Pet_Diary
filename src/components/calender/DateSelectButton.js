@@ -15,8 +15,15 @@ const DateSelectButton = ({
   day,
   defaultString,
   firstDayOfWeek,
+  now,
 }) => {
   const date = `${year}년 ${month}월 ${day}일`;
+  const isNow = () => {
+    if (year != now.getFullYear()) return false;
+    if (month != now.getMonth() + 1) return false;
+    if (day != now.getDate()) return false;
+    return true;
+  };
   return (
     <Pressable
       onPressOut={() => {
@@ -24,14 +31,14 @@ const DateSelectButton = ({
       }}
       style={({ pressed }) => [
         {
-          backgroundColor: "#FFFFFF",
+          backgroundColor: isNow() ? "#00FF00" : "#FFFFFF",
         },
         pressed && {
           backgroundColor: buttonType == ButtonType.DAY ? "#E1D5C6" : "#FFFFFF",
         },
       ]}
     >
-      <View key={day} style={styles.buttonStyle}>
+      <View key={day} style={[styles.buttonStyle]}>
         <Text style={{ color: firstDayOfWeek == 0 ? "red" : "black" }}>
           {buttonType == ButtonType.DAY ? day : defaultString}
         </Text>
@@ -48,6 +55,7 @@ DateSelectButton.propTypes = {
   day: PropTypes.number.isRequired,
   defaultString: PropTypes.string.isRequired,
   firstDayOfWeek: PropTypes.number.isRequired,
+  now: PropTypes.instanceOf(Date).isRequired,
 };
 
 const styles = StyleSheet.create({

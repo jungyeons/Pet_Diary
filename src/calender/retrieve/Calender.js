@@ -5,14 +5,25 @@ import ContentHeader from "./ContentHeader";
 import GridCalender from "../GridCalender";
 
 export default function Calendar({ navigation, route }) {
+  let now = new Date();
   const [year, setYear] = useState(new Date().getFullYear());
   const [month, setMonth] = useState(new Date().getMonth() + 1);
-  const [selectedDate, setSelectedDate] = useState("");
+  const [selectedDate, setSelectedDate] = useState(
+    now.getFullYear() +
+      "년 " +
+      (now.getMonth() + 1) +
+      "월 " +
+      now.getDate() +
+      "일"
+  );
   const [todos, setTodos] = useState(Array(5).fill(""));
   const [updatedTodos, setUpdatedTodos] = useState([]);
   useEffect(() => {
-    if (route.params != undefined)
+    if (route.params != undefined) {
+      handleYearChange(route.params.year.year);
+      handleMonthChange(route.params.month.month);
       handleDateSelection(route.params.date.selectedDate);
+    }
   }, [route.params]);
   const handleYearChange = (newYear) => {
     setYear(newYear);
@@ -39,7 +50,11 @@ export default function Calendar({ navigation, route }) {
   };
   // 수정창 전환
   const navigateEditScreen = () => {
-    navigation.navigate("Edit", { date: { selectedDate } });
+    navigation.navigate("Edit", {
+      year: { year },
+      month: { month },
+      date: { selectedDate },
+    });
   };
 
   const renderTodoInputs = () => {
@@ -73,6 +88,7 @@ export default function Calendar({ navigation, route }) {
             handleDateSelection={handleDateSelection}
             handleMonthChange={handleMonthChange}
             handleYearChange={handleYearChange}
+            now={now}
           />
         </View>
         <View style={styles.contentView}>

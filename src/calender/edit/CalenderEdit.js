@@ -1,26 +1,38 @@
+/* eslint-disable no-undef */
 /* eslint-disable react/prop-types */
 import React, { useEffect, useState } from "react";
-import { View, Text, StyleSheet, ScrollView, Pressable } from "react-native";
+import { View, Text, StyleSheet, Pressable } from "react-native";
 import ContentHeader from "./ContentHeader";
 import GridCalender from "../GridCalender";
 import TodoInputs from "../../components/calender/TodoInputs";
 import { AntDesign } from "@expo/vector-icons";
+import TodoOneInput from "../../components/calender/TodoOneInput";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 export default function CalendarEdit({ navigation, route }) {
+  let now = new Date();
+  const [todoInputs, setTodoInputs] = useState([]);
   const [year, setYear] = useState(new Date().getFullYear());
   const [month, setMonth] = useState(new Date().getMonth() + 1);
-  const [selectedDate, setSelectedDate] = useState("");
-  const [todos, setTodos] = useState(Array(5).fill(""));
-  const [updatedTodos, setUpdatedTodos] = useState([]);
+  const [selectedDate, setSelectedDate] = useState(
+    now.getFullYear() +
+      "년 " +
+      (now.getMonth() + 1) +
+      "월 " +
+      now.getDate() +
+      "일"
+  );
   useEffect(() => {
-    if (route.params != undefined)
+    if (route.params != undefined) {
+      handleYearChange(route.params.year.year);
+      handleMonthChange(route.params.month.month);
       handleDateSelection(route.params.date.selectedDate);
+    }
   }, [route.params]);
   const handleYearChange = (newYear) => {
     setYear(newYear);
     setMonth(1); // 해당 연도의 1월 1일로 자동 선택
     setSelectedDate("");
-    setTodos(Array(5).fill(""));
   };
 
   const handleMonthChange = (newMonth) => {
@@ -32,32 +44,41 @@ export default function CalendarEdit({ navigation, route }) {
       setMonth(1);
     } else setMonth(newMonth);
     setSelectedDate("");
-    setTodos(Array(5).fill(""));
   };
 
   const handleDateSelection = (date) => {
     setSelectedDate(date);
-    setUpdatedTodos(Array(5).fill(""));
   };
 
   const handleTodoChange = (text, index) => {
-    const updatedTodos = [...updatedTodos];
-    updatedTodos[index] = text;
     console.log(text + ", " + index);
-    setUpdatedTodos(updatedTodos);
   };
   // 조회창 전환
   const navigateBackScreen = () => {
-    navigation.navigate("Retrieve", { date: { selectedDate } });
+    navigation.navigate("Retrieve", {
+      year: { year },
+      month: { month },
+      date: { selectedDate },
+    });
   };
-  const addTodo = () => {
-    console.log("할 일 추가s");
+  const addTodoInput = () => {
+    if (todoInputs.length == 5) alert("할일 입력은 5개까지 가능합니다.");
+    else
+      setTodoInputs([
+        ...todoInputs,
+        <TodoOneInput
+          key={todoInputs.length}
+          index={todoInputs.length}
+          handleTodoChange={handleTodoChange}
+        />,
+      ]);
   };
+  const deleteTodoInput = () => {};
   const saveTodo = () => {
     console.log("저장s");
   };
   return (
-    <ScrollView>
+    <KeyboardAwareScrollView>
       <View style={{ marginBottom: 40 }}></View>
       <View style={styles.container}>
         <View style={styles.header}>
@@ -77,30 +98,19 @@ export default function CalendarEdit({ navigation, route }) {
             handleDateSelection={handleDateSelection}
             handleMonthChange={handleMonthChange}
             handleYearChange={handleYearChange}
+            now={now}
           />
         </View>
         <View style={styles.contentView}>
           <ContentHeader
             selectedDate={selectedDate}
-            addButtonOperate={addTodo}
+            addButtonOperate={addTodoInput}
             saveButtonOperate={saveTodo}
           />
-          <TodoInputs
-            todos={todos}
-            updatedTodos={updatedTodos}
-            handleTodoChange={handleTodoChange}
-          />
+          <TodoInputs inputs={todoInputs} />
         </View>
       </View>
-    </ScrollView>
-    // <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-    //   <KeyboardAvoidingView
-    //     style={{ flex: 1 }}
-    //     behavior={Platform.select({ ios: "padding" })}
-    //   >
-
-    //   </KeyboardAvoidingView>
-    // </TouchableWithoutFeedback>
+    </KeyboardAwareScrollView>
   );
 }
 

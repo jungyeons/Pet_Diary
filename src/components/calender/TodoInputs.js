@@ -1,33 +1,21 @@
 import React from "react";
-import { StyleSheet, Text, TextInput, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import PropTypes from "prop-types";
 
-const TodoInputs = ({ todos, updatedTodos, handleTodoChange }) => {
-  const todoInputs = todos.map((todo, index) => (
-    <TextInput
-      key={index}
-      value={updatedTodos[index] || todo}
-      onChangeText={(text) => handleTodoChange(text, index)}
-      placeholder={"할일을 입력해 주세요"}
-      style={styles.todoInputs}
-      placeholderTextColor={"#808080"}
-    />
-  ));
+const TodoInputs = ({ inputs }) => {
   return (
     <View style={{ flex: 5, marginLeft: 10 }}>
       <View style={styles.todoTitleView}>
         <View style={{ marginBottom: 5 }}></View>
         <Text style={styles.todoTitle}>Things to do</Text>
       </View>
-      {todoInputs}
+      {inputs}
     </View>
   );
 };
 
 TodoInputs.propTypes = {
-  todos: PropTypes.array.isRequired,
-  updatedTodos: PropTypes.array.isRequired,
-  handleTodoChange: PropTypes.func.isRequired,
+  inputs: PropTypes.array.isRequired,
 };
 
 const styles = StyleSheet.create({
@@ -51,6 +39,10 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: "bold",
     color: "#745757",
+  },
+  todoInputView: {
+    flexDirection: "row",
+    alignItems: "baseline",
   },
 });
 

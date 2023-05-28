@@ -22,3 +22,4 @@
 1. npm install --save @react-navigation/native (리액트 네비게이션 라이브러리)
 2. npm install @react-navigation/stack (스택 네비게이션)
 3. npm install @react-navigation/bottom-tabs (탭 네비게이션)
+4. npm install react-native-keyboard-aware-scroll-view (텍스트 입력 스크롤로 피해주는 컴포넌트)
