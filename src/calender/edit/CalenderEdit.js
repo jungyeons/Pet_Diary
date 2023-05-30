@@ -11,6 +11,7 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 
 export default function CalendarEdit({ navigation, route }) {
   let now = new Date();
+  const [indexes, setIndexes] = useState([0]);
   const [todoInputs, setTodoInputs] = useState([]);
   const [year, setYear] = useState(new Date().getFullYear());
   const [month, setMonth] = useState(new Date().getMonth() + 1);
@@ -63,17 +64,60 @@ export default function CalendarEdit({ navigation, route }) {
   };
   const addTodoInput = () => {
     if (todoInputs.length == 5) alert("할일 입력은 5개까지 가능합니다.");
-    else
+    else {
+      setIndexes([...indexes, todoInputs.length + 1]);
+      console.log(indexes);
       setTodoInputs([
         ...todoInputs,
         <TodoOneInput
           key={todoInputs.length}
-          index={todoInputs.length}
+          index={indexes[indexes.length - 1]}
           handleTodoChange={handleTodoChange}
+          deleteTodoInput={deleteTodoInput}
         />,
       ]);
+      console.log(indexes.length + ", " + todoInputs.length);
+    }
   };
-  const deleteTodoInput = () => {};
+  let j = 0;
+  const deleteTodoInput = (index) => {
+    let newInputs = [];
+    setTodoInputs((todoInputs) => {
+      // console.log("87줄 : 삭제 : " + index + ", " + inputLen);
+      // 왜그런진 모르겠는데 todoInputs.length가 -누른 위치에 따라서
+      // 그 값이 계속 바뀌니까 다음 위치가 새 배열에 들어가지 않는듯??
+      // 근디 어떻게 -눌린 위치랑 배열 길이가 계속 똑같게 나오지..??
+      // ㄴ 함수형 업데이트로 해결
+      for (let i = 0; i < todoInputs.length; i++) {
+        if (i != index) {
+          console.log(
+            "95줄 : " +
+              i +
+              " =========> " +
+              todoInputs[i] +
+              ", " +
+              todoInputs[i + 1]
+          );
+          // 근디 이번엔 왜 todoInputs가 undefined가 뜨지..??
+          // ㄴ 일단 알아낸건 index 위치에 todoInput이 이미 undefined 상태였다는 거임
+          // ㄴ 이거도 todoInputs 함수형 업뎃 쓰니까 일단 해결된듯??
+          newInputs[j] = todoInputs[i];
+          j++;
+        }
+      }
+      // 여기서 인덱스 초기화도 같이 해줘야 함
+      // 새로 나온 배열 안에 있는 각 TodoOneInput들이 갖는 index 값을 바꿔줘야 하는디.. 어캐하누??
+      console.log("=========================");
+      let newIndexes = [];
+      for (let i = 0; i < newInputs.length; i++) {
+        newIndexes[i] = i;
+      }
+      console.log(newIndexes);
+      setIndexes(newIndexes);
+      console.log(indexes);
+      return newInputs;
+    });
+  };
   const saveTodo = () => {
     console.log("저장s");
   };
