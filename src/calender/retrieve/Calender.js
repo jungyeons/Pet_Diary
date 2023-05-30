@@ -16,20 +16,26 @@ export default function Calendar({ navigation, route }) {
       now.getDate() +
       "일"
   );
-  const [todos, setTodos] = useState(Array(5).fill(""));
-  const [updatedTodos, setUpdatedTodos] = useState([]);
+  const [todos, setTodos] = useState([
+    { id: "1", text: "패턴 숙제" },
+    { id: "2", text: "모프 팀플" },
+    { id: "3", text: "보안 공부" },
+  ]);
+  // const [updatedTodos, setUpdatedTodos] = useState([]);
   useEffect(() => {
     if (route.params != undefined) {
       handleYearChange(route.params.year.year);
       handleMonthChange(route.params.month.month);
       handleDateSelection(route.params.date.selectedDate);
+      // setUpdatedTodos(route.params.returnTodos);
+      console.log(route.params.returnTodos);
+      setTodos(route.params.returnTodos);
     }
   }, [route.params]);
   const handleYearChange = (newYear) => {
     setYear(newYear);
     setMonth(1); // 해당 연도의 1월 1일로 자동 선택
     setSelectedDate("");
-    setTodos(Array(5).fill(""));
   };
 
   const handleMonthChange = (newMonth) => {
@@ -41,12 +47,11 @@ export default function Calendar({ navigation, route }) {
       setMonth(1);
     } else setMonth(newMonth);
     setSelectedDate("");
-    setTodos(Array(5).fill(""));
   };
 
   const handleDateSelection = (date) => {
     setSelectedDate(date);
-    setUpdatedTodos(Array(5).fill(""));
+    // setUpdatedTodos(Array(5).fill(""));
   };
   // 수정창 전환
   const navigateEditScreen = () => {
@@ -54,13 +59,18 @@ export default function Calendar({ navigation, route }) {
       year: { year },
       month: { month },
       date: { selectedDate },
+      todos: { todos },
     });
   };
-
+  let index = 0;
+  const getIndex = () => {
+    index++;
+    return index;
+  };
   const renderTodoInputs = () => {
-    const todoInputs = todos.map((todo, index) => (
-      <Text key={index} style={styles.todoTexts}>
-        할일 {index + 1} {updatedTodos[index] || todo}
+    const todoInputs = todos.map((todo) => (
+      <Text key={todo.id} style={styles.todoTexts}>
+        할일 {getIndex()} : {todo.text}
       </Text>
     ));
     return (

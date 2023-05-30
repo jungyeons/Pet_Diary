@@ -10,10 +10,7 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 
 export default function CalendarEdit({ navigation, route }) {
   let now = new Date();
-  const [todos, setTodos] = useState({
-    // 1: { id: "1" },
-    // 2: { id: "2" },
-  });
+  const [todos, setTodos] = useState({});
   const [year, setYear] = useState(new Date().getFullYear());
   const [month, setMonth] = useState(new Date().getMonth() + 1);
   const [selectedDate, setSelectedDate] = useState(
@@ -53,7 +50,11 @@ export default function CalendarEdit({ navigation, route }) {
   };
 
   const handleTodoChange = (text, id) => {
-    console.log(text + ", " + id);
+    Object.values(todos).map((todo) => {
+      if (todo.id == id) {
+        todo.text = text;
+      }
+    });
   };
   // 조회창 전환
   const navigateBackScreen = () => {
@@ -61,6 +62,7 @@ export default function CalendarEdit({ navigation, route }) {
       year: { year },
       month: { month },
       date: { selectedDate },
+      returnTodos: [],
     });
   };
   const addTodoInput = () => {
@@ -69,7 +71,7 @@ export default function CalendarEdit({ navigation, route }) {
       alert("할일 입력은 5개까지 가능합니다.");
     else {
       const newTodoObject = {
-        [ID]: { id: ID },
+        [ID]: { id: ID, text: "" },
       };
       setTodos({ ...todos, ...newTodoObject });
     }
@@ -80,7 +82,32 @@ export default function CalendarEdit({ navigation, route }) {
     setTodos(currentTodos);
   };
   const saveTodo = () => {
-    console.log("저장s");
+    if (Object.values(todos).length == 0) {
+      alert("입력된 할 일이 없습니다.");
+      return;
+    }
+    let returnTodos = [];
+    Object.values(todos).map((todo) => {
+      if (todo.text.length > 0) {
+        // console.log(i + " : " + todo.text);
+        returnTodos.push(todo);
+      }
+    });
+    if (returnTodos.length == 0) {
+      alert("입력된 할 일이 없습니다.");
+      return;
+    }
+    let alertMessage = "저장되었습니다!\n[입력된 할일들]\n";
+    for (let j = 0; j < returnTodos.length; j++) {
+      alertMessage += j + 1 + " : " + returnTodos[j].text + "\n";
+    }
+    alert(alertMessage);
+    navigation.navigate("Retrieve", {
+      year: { year },
+      month: { month },
+      date: { selectedDate },
+      returnTodos: returnTodos,
+    });
   };
   return (
     <KeyboardAwareScrollView>
