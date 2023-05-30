@@ -1,21 +1,31 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import PropTypes from "prop-types";
+import TodoOneInput from "./TodoOneInput";
 
-const TodoInputs = ({ inputs }) => {
+const TodoInputs = ({ todos, handleTodoChange, deleteTodoInput }) => {
   return (
     <View style={{ flex: 5, marginLeft: 10 }}>
       <View style={styles.todoTitleView}>
         <View style={{ marginBottom: 5 }}></View>
         <Text style={styles.todoTitle}>Things to do</Text>
       </View>
-      {inputs}
+      {Object.values(todos).map((todo) => (
+        <TodoOneInput
+          key={todo.id}
+          id={todo.id}
+          handleTodoChange={handleTodoChange}
+          deleteTodoInput={deleteTodoInput}
+        />
+      ))}
     </View>
   );
 };
 
 TodoInputs.propTypes = {
-  inputs: PropTypes.array.isRequired,
+  todos: PropTypes.object.isRequired,
+  handleTodoChange: PropTypes.func.isRequired,
+  deleteTodoInput: PropTypes.func.isRequired,
 };
 
 const styles = StyleSheet.create({

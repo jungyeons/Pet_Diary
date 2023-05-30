@@ -1,27 +1,21 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Pressable, StyleSheet, TextInput, View } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import PropTypes from "prop-types";
 
-const TodoOneInput = ({ index, handleTodoChange, deleteTodoInput }) => {
-  useEffect(() => {
-    console.log("렌더 : " + index);
-  }, [index]);
+const TodoOneInput = ({ id, handleTodoChange, deleteTodoInput }) => {
+  const _deleteTodoInput = () => {
+    deleteTodoInput(id);
+  };
   return (
     <View style={styles.todoInputView}>
-      <Pressable
-        onPressOut={() => {
-          console.log("실행 : " + index);
-          deleteTodoInput(index);
-        }}
-        hitSlop={20}
-      >
+      <Pressable onPressOut={_deleteTodoInput} hitSlop={20}>
         <AntDesign name="minuscircleo" size={15} color="red" />
       </Pressable>
       <View style={{ width: 10 }} />
       <TextInput
-        onChangeText={(text) => handleTodoChange(text, index)}
-        placeholder={"할일을 입력해 주세요"}
+        onChangeText={(text) => handleTodoChange(text, id)}
+        placeholder={"할일을 입력해 주세요 : " + id}
         style={styles.todoInputs}
         placeholderTextColor={"#808080"}
       />
@@ -30,7 +24,7 @@ const TodoOneInput = ({ index, handleTodoChange, deleteTodoInput }) => {
 };
 
 TodoOneInput.propTypes = {
-  index: PropTypes.number.isRequired,
+  id: PropTypes.string.isRequired,
   handleTodoChange: PropTypes.func.isRequired,
   deleteTodoInput: PropTypes.func.isRequired,
 };
