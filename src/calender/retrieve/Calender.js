@@ -1,10 +1,13 @@
+/* eslint-disable no-undef */
 /* eslint-disable react/prop-types */
 import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet, ScrollView } from "react-native";
 import ContentHeader from "./ContentHeader";
 import GridCalender from "../GridCalender";
+import TodoAddButton from "../../components/calender/TodoAddButton";
+import TodosComp from "./TodosComp";
 
-export default function Calendar({ navigation, route }) {
+export default function Calendar({ navigation }) {
   let now = new Date();
   const [year, setYear] = useState(new Date().getFullYear());
   const [month, setMonth] = useState(new Date().getMonth() + 1);
@@ -16,22 +19,12 @@ export default function Calendar({ navigation, route }) {
       now.getDate() +
       "일"
   );
-  const [todos, setTodos] = useState([
-    { id: "1", text: "패턴 숙제" },
-    { id: "2", text: "모프 팀플" },
-    { id: "3", text: "보안 공부" },
-  ]);
+  const [todos, setTodos] = useState({
+    1: { id: "1", text: "패턴 숙제" },
+    2: { id: "2", text: "모프 팀플" },
+    3: { id: "3", text: "보안 공부" },
+  });
   // const [updatedTodos, setUpdatedTodos] = useState([]);
-  useEffect(() => {
-    if (route.params != undefined) {
-      handleYearChange(route.params.year.year);
-      handleMonthChange(route.params.month.month);
-      handleDateSelection(route.params.date.selectedDate);
-      // setUpdatedTodos(route.params.returnTodos);
-      console.log(route.params.returnTodos);
-      setTodos(route.params.returnTodos);
-    }
-  }, [route.params]);
   const handleYearChange = (newYear) => {
     setYear(newYear);
     setMonth(1); // 해당 연도의 1월 1일로 자동 선택
@@ -62,26 +55,34 @@ export default function Calendar({ navigation, route }) {
       todos: { todos },
     });
   };
+  const addTodo = () => {
+    const ID = Date.now().toString();
+    const newTodoObject = {
+      [ID]: { id: ID, text: "일-" + ID },
+    };
+    setTodos({ ...todos, ...newTodoObject });
+  };
+  const deleteTodo = (id) => {
+    const currentTodos = Object.assign({}, todos);
+    delete currentTodos[id];
+    setTodos(currentTodos);
+  };
+  const editTodo = (id) => {
+    alert("수정 : " + id);
+  };
   let index = 0;
   const getIndex = () => {
     index++;
     return index;
   };
-  const renderTodoInputs = () => {
-    const todoInputs = todos.map((todo) => (
-      <Text key={todo.id} style={styles.todoTexts}>
-        할일 {getIndex()} : {todo.text}
-      </Text>
-    ));
-    return (
-      <View style={{ flex: 5, marginLeft: 10 }}>
-        <View style={styles.todoTitleView}>
-          <View style={{ marginBottom: 5 }}></View>
-          <Text style={styles.todoTitle}>Things to do</Text>
+  const getAddButton = () => {
+    if (Object.values(todos).length != 5) {
+      return (
+        <View style={styles.addButton}>
+          <TodoAddButton buttonOperate={addTodo} />
         </View>
-        {todoInputs}
-      </View>
-    );
+      );
+    }
   };
   return (
     <ScrollView>
@@ -106,7 +107,13 @@ export default function Calendar({ navigation, route }) {
             selectedDate={selectedDate}
             buttonOperate={navigateEditScreen}
           />
-          {renderTodoInputs()}
+          <TodosComp
+            todos={todos}
+            deleteTodo={deleteTodo}
+            editTodo={editTodo}
+            getIndex={getIndex}
+          />
+          {getAddButton()}
         </View>
       </View>
     </ScrollView>
@@ -114,16 +121,6 @@ export default function Calendar({ navigation, route }) {
 }
 
 const styles = StyleSheet.create({
-  todoTitleView: {
-    width: 100,
-    height: 30,
-    marginBottom: 20,
-    marginTop: 2,
-    borderRadius: 12,
-    alignItems: "center",
-    backgroundColor: "#D2B48C",
-    marginLeft: 3,
-  },
   container: {
     flex: 1,
     justifyContent: "center",
@@ -146,15 +143,8 @@ const styles = StyleSheet.create({
   contentView: {
     flex: 3,
   },
-  todoTitle: {
-    fontSize: 15,
-    fontWeight: "bold",
-    color: "#FFFFFF",
-  },
-  todoTexts: {
-    marginBottom: 30,
-    fontSize: 20,
-    fontWeight: "bold",
-    color: "#745757",
+  addButton: {
+    flexDirection: "row",
+    justifyContent: "center",
   },
 });

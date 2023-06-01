@@ -33,7 +33,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     marginLeft: 10,
-    // backgroundColor: "#745757",
   },
   dateView: {
     flex: 2,
