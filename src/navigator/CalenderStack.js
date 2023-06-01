@@ -9,7 +9,7 @@ const Stack = createStackNavigator();
 const CalenderStack = () => {
   return (
     <NavigationContainer independent={true}>
-      <Stack.Navigator initialRouteName="Edit">
+      <Stack.Navigator initialRouteName="Retrieve">
         <Stack.Screen
           name="Retrieve"
           component={Calendar}

@@ -1,44 +1,42 @@
 import React from "react";
-import { StyleSheet, Text, TextInput, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import PropTypes from "prop-types";
+import TodoOneInput from "./TodoOneInput";
 
-const TodoInputs = ({ todos, updatedTodos, handleTodoChange }) => {
-  const todoInputs = todos.map((todo, index) => (
-    <TextInput
-      key={index}
-      value={updatedTodos[index] || todo}
-      onChangeText={(text) => handleTodoChange(text, index)}
-      placeholder={"할일을 입력해 주세요"}
-      style={styles.todoInputs}
-      placeholderTextColor={"#808080"}
-    />
-  ));
+const TodoInputs = ({ todos, handleTodoChange, deleteTodoInput }) => {
   return (
-    <View style={{ flex: 5 }}>
+    <View style={{ flex: 5, marginLeft: 10 }}>
       <View style={styles.todoTitleView}>
         <View style={{ marginBottom: 5 }}></View>
         <Text style={styles.todoTitle}>Things to do</Text>
       </View>
-      {todoInputs}
+      {Object.values(todos).map((todo) => (
+        <TodoOneInput
+          key={todo.id}
+          id={todo.id}
+          handleTodoChange={handleTodoChange}
+          deleteTodoInput={deleteTodoInput}
+        />
+      ))}
     </View>
   );
 };
 
 TodoInputs.propTypes = {
-  todos: PropTypes.array.isRequired,
-  updatedTodos: PropTypes.array.isRequired,
+  todos: PropTypes.object.isRequired,
   handleTodoChange: PropTypes.func.isRequired,
+  deleteTodoInput: PropTypes.func.isRequired,
 };
 
 const styles = StyleSheet.create({
   todoTitleView: {
     width: 100,
     height: 30,
-    marginBottom: 10,
-    marginTop: 2,
     borderRadius: 12,
+    marginBottom: 18,
+    marginTop: 2,
     alignItems: "center",
-    backgroundColor: "#745757",
+    backgroundColor: "#D2B48C",
     marginLeft: 3,
   },
   todoTitle: {
@@ -51,6 +49,10 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: "bold",
     color: "#745757",
+  },
+  todoInputView: {
+    flexDirection: "row",
+    alignItems: "baseline",
   },
 });
 
