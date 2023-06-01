@@ -3,15 +3,14 @@ import OneTodo from "../../components/calender/OneTodo";
 import { StyleSheet, Text, View } from "react-native";
 import PropTypes from "prop-types";
 
-const TodosComp = ({ todos, deleteTodo, editTodo, getIndex }) => {
-  const todoInputs = Object.values(todos).map((todo) => (
+const TodosComp = ({ todos, deleteTodo, editTodo }) => {
+  const todoInputs = Object.values(todos).map((todo, index) => (
     <OneTodo
       key={todo.id}
-      id={todo.id}
-      text={todo.text}
+      item={todo}
       deleteTodo={deleteTodo}
       editTodo={editTodo}
-      getIndex={getIndex}
+      index={index}
     />
   ));
   return (
@@ -38,7 +37,6 @@ TodosComp.propTypes = {
   todos: PropTypes.object.isRequired,
   deleteTodo: PropTypes.func.isRequired,
   editTodo: PropTypes.func.isRequired,
-  getIndex: PropTypes.func.isRequired,
 };
 
 const styles = StyleSheet.create({

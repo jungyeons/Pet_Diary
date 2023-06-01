@@ -16,7 +16,7 @@ const ContentHeader = ({ selectedDate, buttonOperate }) => {
         <Text>드롭 다운</Text>
       </View>
       <View style={styles.editButtonView}>
-        <CalButton buttonType={ButtonType.EDIT} operate={buttonOperate} />
+        {/* <CalButton buttonType={ButtonType.EDIT} operate={buttonOperate} /> */}
       </View>
     </View>
   );

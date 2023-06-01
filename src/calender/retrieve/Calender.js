@@ -1,11 +1,12 @@
 /* eslint-disable no-undef */
 /* eslint-disable react/prop-types */
-import React, { useEffect, useState } from "react";
-import { View, Text, StyleSheet, ScrollView } from "react-native";
+import React, { useState } from "react";
+import { View, Text, StyleSheet } from "react-native";
 import ContentHeader from "./ContentHeader";
 import GridCalender from "../GridCalender";
 import TodoAddButton from "../../components/calender/TodoAddButton";
 import TodosComp from "./TodosComp";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 export default function Calendar({ navigation }) {
   let now = new Date();
@@ -20,9 +21,9 @@ export default function Calendar({ navigation }) {
       "일"
   );
   const [todos, setTodos] = useState({
-    1: { id: "1", text: "패턴 숙제" },
-    2: { id: "2", text: "모프 팀플" },
-    3: { id: "3", text: "보안 공부" },
+    1: { id: "1", text: "패턴 숙제", isEditing: false },
+    2: { id: "2", text: "모프 팀플", isEditing: false },
+    3: { id: "3", text: "보안 공부", isEditing: false },
   });
   // const [updatedTodos, setUpdatedTodos] = useState([]);
   const handleYearChange = (newYear) => {
@@ -58,7 +59,7 @@ export default function Calendar({ navigation }) {
   const addTodo = () => {
     const ID = Date.now().toString();
     const newTodoObject = {
-      [ID]: { id: ID, text: "일-" + ID },
+      [ID]: { id: ID, text: "", isEditing: true },
     };
     setTodos({ ...todos, ...newTodoObject });
   };
@@ -67,13 +68,10 @@ export default function Calendar({ navigation }) {
     delete currentTodos[id];
     setTodos(currentTodos);
   };
-  const editTodo = (id) => {
-    alert("수정 : " + id);
-  };
-  let index = 0;
-  const getIndex = () => {
-    index++;
-    return index;
+  const editTodo = (item) => {
+    const currentTodos = Object.assign({}, todos);
+    currentTodos[item.id] = item;
+    setTodos(currentTodos);
   };
   const getAddButton = () => {
     if (Object.values(todos).length != 5) {
@@ -85,7 +83,7 @@ export default function Calendar({ navigation }) {
     }
   };
   return (
-    <ScrollView>
+    <KeyboardAwareScrollView>
       <View style={{ marginBottom: 40 }}></View>
       <View style={styles.container}>
         <View style={styles.header}>
@@ -111,12 +109,11 @@ export default function Calendar({ navigation }) {
             todos={todos}
             deleteTodo={deleteTodo}
             editTodo={editTodo}
-            getIndex={getIndex}
           />
           {getAddButton()}
         </View>
       </View>
-    </ScrollView>
+    </KeyboardAwareScrollView>
   );
 }
 

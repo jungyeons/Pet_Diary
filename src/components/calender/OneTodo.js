@@ -1,23 +1,61 @@
-import React from "react";
+/* eslint-disable no-undef */
+import React, { useEffect, useState } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import PropTypes from "prop-types";
 import { AntDesign } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
+import TodoOneInput from "./TodoOneInput";
 
-const OneTodo = ({ text, id, deleteTodo, editTodo, getIndex }) => {
+const OneTodo = ({ item, deleteTodo, editTodo, index }) => {
+  useEffect(() => {
+    console.log("item Selecting " + item.isEditing + ", " + item.id);
+    setIsEditing(item.isEditing);
+  }, []);
+  const [isEditing, setIsEditing] = useState(false);
+  const [text, setText] = useState(item.text);
   const _deleteTodo = () => {
-    deleteTodo(id);
+    deleteTodo(item.id);
   };
   const _editTodo = () => {
-    editTodo(id);
+    // 여기가 펜 버튼 눌렀을 때 실행되는 부분
+    // ㄴ setEditing도 바뀌고 input에 포커스도 되었으면 좋겠음
+    setIsEditing(true);
   };
-  const _getIndex = () => {
-    return getIndex();
+  const _handleTodoChange = (text) => {
+    setText(text);
   };
-  return (
+  const _onSubmitEditing = () => {
+    if (isEditing) {
+      if (text.length == 0) {
+        alert("최소 한 글자 입력해 주세요");
+        item.isEditing = true;
+        setIsEditing(item.isEditing);
+        console.log(isEditing);
+      } else {
+        const editedItem = Object.assign({}, item, { text });
+        item.isEditing = false;
+        setIsEditing(item.isEditing);
+        editTodo(editedItem);
+      }
+    }
+  };
+  const _onBlur = () => {
+    if (isEditing) {
+      setIsEditing(false);
+      setText(item.text);
+    }
+  };
+  return isEditing ? (
+    <TodoOneInput
+      item={item}
+      handleTodoChange={_handleTodoChange}
+      onSubmitEditing={_onSubmitEditing}
+      onBlur={_onBlur}
+    />
+  ) : (
     <View style={styles.todoView}>
       <Text style={styles.todoTexts}>
-        할일 {_getIndex()} : {text}
+        할일 {index + 1} : {item.text}
       </Text>
       <View style={styles.buttonView}>
         <Pressable onPressIn={_deleteTodo}>
@@ -32,11 +70,10 @@ const OneTodo = ({ text, id, deleteTodo, editTodo, getIndex }) => {
 };
 
 OneTodo.propTypes = {
-  text: PropTypes.string.isRequired,
-  id: PropTypes.string.isRequired,
+  item: PropTypes.object.isRequired,
   deleteTodo: PropTypes.func.isRequired,
   editTodo: PropTypes.func.isRequired,
-  getIndex: PropTypes.func.isRequired,
+  index: PropTypes.number.isRequired,
 };
 
 const styles = StyleSheet.create({
@@ -46,6 +83,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   todoTexts: {
+    marginLeft: 10,
     marginBottom: 30,
     fontSize: 20,
     fontWeight: "bold",
