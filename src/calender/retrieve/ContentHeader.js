@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import CalButton from "../../components/calender/CalButton";
 import { ButtonType } from "../../components/calender/CalButton";
 
-const ContentHeader = ({ selectedDate, buttonOperate }) => {
+const ContentHeader = ({ selectedDate }) => {
   return (
     <View style={styles.container}>
       {/* 자식 : dateView, feelView, editButtonView */}
@@ -15,16 +15,12 @@ const ContentHeader = ({ selectedDate, buttonOperate }) => {
         <Text style={styles.todayFeel}>오늘 기분은?</Text>
         <Text>드롭 다운</Text>
       </View>
-      <View style={styles.editButtonView}>
-        <CalButton buttonType={ButtonType.EDIT} operate={buttonOperate} />
-      </View>
     </View>
   );
 };
 
 ContentHeader.propTypes = {
   selectedDate: PropTypes.string.isRequired,
-  buttonOperate: PropTypes.func.isRequired,
 };
 
 const styles = StyleSheet.create({
@@ -33,10 +29,9 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     marginLeft: 10,
-    // backgroundColor: "#745757",
   },
   dateView: {
-    flex: 2,
+    flex: 1,
   },
   dateText: {
     color: "#000000",
@@ -51,10 +46,6 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "column",
     alignItems: "center",
-  },
-  editButtonView: {
-    flex: 1,
-    paddingRight: 5,
   },
 });
 

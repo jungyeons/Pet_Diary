@@ -24,6 +24,9 @@ const DateSelectButton = ({
     if (day != now.getDate()) return false;
     return true;
   };
+  const getFontColor = () => {
+    return isNow() ? "#FFFFFF" : "#000000";
+  };
   return (
     <Pressable
       onPressOut={() => {
@@ -31,7 +34,7 @@ const DateSelectButton = ({
       }}
       style={({ pressed }) => [
         {
-          backgroundColor: isNow() ? "#00FF00" : "#FFFFFF",
+          backgroundColor: isNow() ? "#D2B48C" : "#FFFFFF",
         },
         pressed && {
           backgroundColor: buttonType == ButtonType.DAY ? "#E1D5C6" : "#FFFFFF",
@@ -39,7 +42,12 @@ const DateSelectButton = ({
       ]}
     >
       <View key={day} style={[styles.buttonStyle]}>
-        <Text style={{ color: firstDayOfWeek == 0 ? "red" : "black" }}>
+        <Text
+          style={{
+            color: firstDayOfWeek == 0 ? "red" : getFontColor(),
+            fontWeight: "bold",
+          }}
+        >
           {buttonType == ButtonType.DAY ? day : defaultString}
         </Text>
       </View>
