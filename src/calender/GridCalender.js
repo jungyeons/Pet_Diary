@@ -29,14 +29,6 @@ const GridCalender = ({
     return new Date(year, month - 1, day).getDay();
   };
 
-  // 선택 가능한 날짜 스타일 설정
-  const getDateButtonStyle = (day) => {
-    if (day === selectedDate) {
-      return { backgroundColor: "#E1D5C6" }; // 포인트 색상
-    }
-    return {};
-  };
-
   const daysInMonth = getDaysInMonth(year, month);
   const firstDayOfWeek = getFirstDayOfWeek(year, month, 1);
   const lastDayOfWeek = getLastDayOfWeek(year, month, daysInMonth);
