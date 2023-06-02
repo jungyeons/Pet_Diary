@@ -8,7 +8,7 @@ import TodoAddButton from "../../components/calender/TodoAddButton";
 import TodosComp from "./TodosComp";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
-export default function Calendar({ navigation }) {
+export default function Calendar() {
   let now = new Date();
   const [year, setYear] = useState(new Date().getFullYear());
   const [month, setMonth] = useState(new Date().getMonth() + 1);
@@ -20,11 +20,7 @@ export default function Calendar({ navigation }) {
       now.getDate() +
       "일"
   );
-  const [todos, setTodos] = useState({
-    1: { id: "1", text: "패턴 숙제", isEditing: false },
-    2: { id: "2", text: "모프 팀플", isEditing: false },
-    3: { id: "3", text: "보안 공부", isEditing: false },
-  });
+  const [todos, setTodos] = useState({});
   // const [updatedTodos, setUpdatedTodos] = useState([]);
   const handleYearChange = (newYear) => {
     setYear(newYear);
@@ -48,18 +44,18 @@ export default function Calendar({ navigation }) {
     // setUpdatedTodos(Array(5).fill(""));
   };
   // 수정창 전환
-  const navigateEditScreen = () => {
-    navigation.navigate("Edit", {
-      year: { year },
-      month: { month },
-      date: { selectedDate },
-      todos: { todos },
-    });
-  };
+  // const navigateEditScreen = () => {
+  //   navigation.navigate("Edit", {
+  //     year: { year },
+  //     month: { month },
+  //     date: { selectedDate },
+  //     todos: { todos },
+  //   });
+  // };
   const addTodo = () => {
     const ID = Date.now().toString();
     const newTodoObject = {
-      [ID]: { id: ID, text: "", isEditing: true },
+      [ID]: { id: ID, text: "" },
     };
     setTodos({ ...todos, ...newTodoObject });
   };
@@ -101,10 +97,7 @@ export default function Calendar({ navigation }) {
           />
         </View>
         <View style={styles.contentView}>
-          <ContentHeader
-            selectedDate={selectedDate}
-            buttonOperate={navigateEditScreen}
-          />
+          <ContentHeader selectedDate={selectedDate} buttonOperate={() => {}} />
           <TodosComp
             todos={todos}
             deleteTodo={deleteTodo}

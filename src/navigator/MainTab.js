@@ -2,7 +2,7 @@ import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Ionicons } from "@expo/vector-icons";
 import Community from "../community/Community";
-import CalenderStack from "./CalenderStack";
+import Calender from "../calender/retrieve/Calender";
 import CheckList from "../checkList/CheckList";
 
 const Tab = createBottomTabNavigator();
@@ -27,7 +27,7 @@ const TabNavigator = () => {
       />
       <Tab.Screen
         name="Calender"
-        component={CalenderStack}
+        component={Calender}
         options={{
           headerShown: false,
           tabBarIcon: (props) =>

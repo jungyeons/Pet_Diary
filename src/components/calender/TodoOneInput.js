@@ -2,11 +2,18 @@ import React from "react";
 import { StyleSheet, TextInput, View } from "react-native";
 import PropTypes from "prop-types";
 
-const TodoOneInput = ({ item, handleTodoChange, onSubmitEditing, onBlur }) => {
+const TodoOneInput = ({
+  item,
+  handleTodoChange,
+  onSubmitEditing,
+  onBlur,
+  refInput,
+}) => {
   return (
     <View style={styles.todoInputView}>
       <View style={{ width: 10 }} />
       <TextInput
+        ref={refInput}
         onChangeText={(text) => {
           handleTodoChange(text);
         }}
@@ -15,6 +22,7 @@ const TodoOneInput = ({ item, handleTodoChange, onSubmitEditing, onBlur }) => {
         placeholderTextColor={"#808080"}
         onSubmitEditing={onSubmitEditing}
         onBlur={onBlur}
+        returnKeyType="done"
       />
     </View>
   );
@@ -25,13 +33,15 @@ TodoOneInput.propTypes = {
   handleTodoChange: PropTypes.func.isRequired,
   onSubmitEditing: PropTypes.func.isRequired,
   onBlur: PropTypes.func.isRequired,
+  refInput: PropTypes.any.isRequired,
 };
 
 const styles = StyleSheet.create({
   todoInputs: {
     marginBottom: 30,
-    fontSize: 16,
     color: "#745757",
+    fontSize: 20,
+    fontWeight: "bold",
   },
   todoInputView: {
     flexDirection: "row",

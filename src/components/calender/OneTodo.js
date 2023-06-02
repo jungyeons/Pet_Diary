@@ -1,5 +1,5 @@
 /* eslint-disable no-undef */
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import PropTypes from "prop-types";
 import { AntDesign } from "@expo/vector-icons";
@@ -7,11 +7,13 @@ import { FontAwesome } from "@expo/vector-icons";
 import TodoOneInput from "./TodoOneInput";
 
 const OneTodo = ({ item, deleteTodo, editTodo, index }) => {
+  const refInput = useRef(null);
+  const [isEditing, setIsEditing] = useState(true);
   useEffect(() => {
-    console.log("item Selecting " + item.isEditing + ", " + item.id);
-    setIsEditing(item.isEditing);
-  }, []);
-  const [isEditing, setIsEditing] = useState(false);
+    if (isEditing && refInput.current) {
+      refInput.current.focus();
+    }
+  }, [isEditing]);
   const [text, setText] = useState(item.text);
   const _deleteTodo = () => {
     deleteTodo(item.id);
@@ -26,27 +28,35 @@ const OneTodo = ({ item, deleteTodo, editTodo, index }) => {
   };
   const _onSubmitEditing = () => {
     if (isEditing) {
-      if (text.length == 0) {
-        alert("최소 한 글자 입력해 주세요");
-        item.isEditing = true;
-        setIsEditing(item.isEditing);
-        console.log(isEditing);
-      } else {
+      if (text.length != 0) {
         const editedItem = Object.assign({}, item, { text });
-        item.isEditing = false;
-        setIsEditing(item.isEditing);
+        setIsEditing(false);
         editTodo(editedItem);
       }
     }
   };
   const _onBlur = () => {
     if (isEditing) {
-      setIsEditing(false);
-      setText(item.text);
+      // text: input에 입력된 내용
+      // ㄴ 펜버튼 누르고 input 입력 안하고 blur 처리되었을 때는 이거 길이 0 아님
+      // item.text: 입력하고 확인("Done") 버튼 눌러서 입력된 내용
+      if (text.length != 0) {
+        if (item.text == 0) {
+          alert("내용 등록은 완료 버튼을 눌려주세요");
+          refInput.current.focus();
+        } else {
+          setIsEditing(false);
+          setText(item.text);
+        }
+      } else {
+        alert("최소 한 글자 입력해 주세요");
+        refInput.current.focus();
+      }
     }
   };
   return isEditing ? (
     <TodoOneInput
+      refInput={refInput}
       item={item}
       handleTodoChange={_handleTodoChange}
       onSubmitEditing={_onSubmitEditing}
