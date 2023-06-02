@@ -14,6 +14,7 @@ const GridCalender = ({
   handleDateSelection,
   handleMonthChange,
   handleYearChange,
+  now,
 }) => {
   // 월별 일수 계산 함수
   const getDaysInMonth = (year, month) => {
@@ -39,7 +40,6 @@ const GridCalender = ({
   const daysInMonth = getDaysInMonth(year, month);
   const firstDayOfWeek = getFirstDayOfWeek(year, month, 1);
   const lastDayOfWeek = getLastDayOfWeek(year, month, daysInMonth);
-
   const calendar = [];
   // 요일 헤더
   calendar.push(<DateSelectHeader key={"weekDayView"} />);
@@ -61,6 +61,7 @@ const GridCalender = ({
           buttonType={ButtonType.DUMY}
           defaultString=""
           firstDayOfWeek={-1}
+          now={now}
         />
       );
     }
@@ -77,6 +78,7 @@ const GridCalender = ({
         buttonType={ButtonType.DAY}
         defaultString=""
         firstDayOfWeek={getFirstDayOfWeek(year, month, day)}
+        now={now}
       />
     );
     if ((firstDayOfWeek + day) % 7 === 0 || day === daysInMonth) {
@@ -92,6 +94,7 @@ const GridCalender = ({
               buttonType={ButtonType.DUMY}
               defaultString=""
               firstDayOfWeek={-1}
+              now={now}
             />
           );
         }
@@ -113,7 +116,6 @@ const GridCalender = ({
       row = [];
     }
   }
-
   return (
     <View>
       <View style={{ marginBottom: 7 }}></View>
@@ -142,6 +144,7 @@ GridCalender.propTypes = {
   handleDateSelection: PropTypes.func.isRequired,
   handleMonthChange: PropTypes.func.isRequired,
   handleYearChange: PropTypes.func.isRequired,
+  now: PropTypes.instanceOf(Date).isRequired,
 };
 
 export default GridCalender;

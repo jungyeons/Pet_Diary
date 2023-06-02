@@ -32,6 +32,7 @@ const styles = StyleSheet.create({
     height: 50,
     flexDirection: "row",
     alignItems: "center",
+    marginLeft: 10,
     // backgroundColor: "#745757",
   },
   dateView: {
@@ -40,7 +41,7 @@ const styles = StyleSheet.create({
   dateText: {
     color: "#000000",
     fontWeight: "bold",
-    fontSize: 16,
+    fontSize: 15,
   },
   todayFeel: {
     color: "#000000",

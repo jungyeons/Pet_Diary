@@ -6,7 +6,6 @@ import { ButtonType } from "../../components/calender/CalButton";
 
 const ContentHeader = ({
   selectedDate,
-  backButtonOperate,
   addButtonOperate,
   saveButtonOperate,
 }) => {
@@ -17,12 +16,9 @@ const ContentHeader = ({
         <Text style={styles.dateText}>선택 날짜 : {selectedDate}</Text>
       </View>
       <View style={styles.buttonView}>
-        <CalButton buttonType={ButtonType.BACK} operate={backButtonOperate} />
-        <View style={{ marginRight: 15 }}></View>
         <CalButton buttonType={ButtonType.ADD} operate={addButtonOperate} />
-        <View style={{ marginRight: 15 }}></View>
+        <View style={{ marginRight: 30 }}></View>
         <CalButton buttonType={ButtonType.SAVE} operate={saveButtonOperate} />
-        <View style={{ marginRight: 15 }}></View>
       </View>
     </View>
   );
@@ -30,7 +26,6 @@ const ContentHeader = ({
 
 ContentHeader.propTypes = {
   selectedDate: PropTypes.string.isRequired,
-  backButtonOperate: PropTypes.func.isRequired,
   addButtonOperate: PropTypes.func.isRequired,
   saveButtonOperate: PropTypes.func.isRequired,
 };
@@ -40,11 +35,12 @@ const styles = StyleSheet.create({
     height: 50,
     flexDirection: "row",
     alignItems: "center",
+    marginLeft: 10,
     // backgroundColor: "#745757",
   },
   dateText: {
     color: "#000000",
-    fontSize: 16,
+    fontSize: 15,
     fontWeight: "bold",
   },
   dateView: {
