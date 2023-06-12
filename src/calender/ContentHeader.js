@@ -1,8 +1,6 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import PropTypes from "prop-types";
-import CalButton from "../../components/calender/CalButton";
-import { ButtonType } from "../../components/calender/CalButton";
 
 const ContentHeader = ({ selectedDate }) => {
   return (

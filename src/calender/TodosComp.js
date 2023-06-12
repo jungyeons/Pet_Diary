@@ -1,5 +1,5 @@
 import React from "react";
-import OneTodo from "../../components/calender/OneTodo";
+import OneTodo from "../components/calender/OneTodo";
 import { StyleSheet, Text, View } from "react-native";
 import PropTypes from "prop-types";
 

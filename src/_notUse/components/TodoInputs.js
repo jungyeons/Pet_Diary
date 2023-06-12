@@ -1,7 +1,7 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import PropTypes from "prop-types";
-import TodoOneInput from "./TodoOneInput";
+import TodoOneInput from "../../components/calender/TodoOneInput";
 
 const TodoInputs = ({ todos, handleTodoChange, deleteTodoInput }) => {
   return (

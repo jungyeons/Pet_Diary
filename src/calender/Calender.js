@@ -3,8 +3,8 @@
 import React, { useState } from "react";
 import { View, Text, StyleSheet } from "react-native";
 import ContentHeader from "./ContentHeader";
-import GridCalender from "../GridCalender";
-import TodoAddButton from "../../components/calender/TodoAddButton";
+import GridCalender from "./GridCalender";
+import TodoAddButton from "../components/calender/TodoAddButton";
 import TodosComp from "./TodosComp";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
