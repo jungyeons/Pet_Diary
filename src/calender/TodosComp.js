@@ -2,8 +2,9 @@ import React from "react";
 import OneTodo from "../components/calender/OneTodo";
 import { StyleSheet, Text, View } from "react-native";
 import PropTypes from "prop-types";
+import TodoAddButton from "../components/calender/TodoAddButton";
 
-const TodosComp = ({ todos, deleteTodo, editTodo }) => {
+const TodosComp = ({ todos, deleteTodo, editTodo, addTodo }) => {
   const todoInputs = Object.values(todos).map((todo, index) => (
     <OneTodo
       key={todo.id}
@@ -13,6 +14,21 @@ const TodosComp = ({ todos, deleteTodo, editTodo }) => {
       index={index}
     />
   ));
+  const getAddButton = () => {
+    if (Object.values(todos).length != 5) {
+      return (
+        <View style={styles.addButton}>
+          <TodoAddButton
+            buttonOperate={() => {
+              // console.log(Object.values(todos).length);
+              // 여기에서 포커스 잡게 못하나...
+              addTodo();
+            }}
+          />
+        </View>
+      );
+    }
+  };
   return (
     <View style={{ flex: 5, marginLeft: 10 }}>
       <View style={{ flexDirection: "row" }}>
@@ -29,6 +45,7 @@ const TodosComp = ({ todos, deleteTodo, editTodo }) => {
         </View>
       </View>
       {todoInputs}
+      {getAddButton()}
     </View>
   );
 };
@@ -37,6 +54,7 @@ TodosComp.propTypes = {
   todos: PropTypes.object.isRequired,
   deleteTodo: PropTypes.func.isRequired,
   editTodo: PropTypes.func.isRequired,
+  addTodo: PropTypes.func.isRequired,
 };
 
 const styles = StyleSheet.create({
@@ -54,6 +72,10 @@ const styles = StyleSheet.create({
     fontSize: 15,
     fontWeight: "bold",
     color: "#FFFFFF",
+  },
+  addButton: {
+    flexDirection: "row",
+    justifyContent: "center",
   },
 });
 

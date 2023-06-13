@@ -17,7 +17,6 @@ const DateSelectButton = ({
   firstDayOfWeek,
   now,
 }) => {
-  const date = `${year}년 ${month}월 ${day}일`;
   const isNow = () => {
     if (year != now.getFullYear()) return false;
     if (month != now.getMonth() + 1) return false;
@@ -30,7 +29,7 @@ const DateSelectButton = ({
   return (
     <Pressable
       onPressOut={() => {
-        if (buttonType == ButtonType.DAY) handleDateSelection(date);
+        if (buttonType == ButtonType.DAY) handleDateSelection(year, month, day);
       }}
       style={({ pressed }) => [
         {
