@@ -8,9 +8,12 @@ import TodoOneInput from "./TodoOneInput";
 
 const OneTodo = ({ item, deleteTodo, editTodo, index }) => {
   const refInput = useRef(null);
-  const [isEditing, setIsEditing] = useState(true);
+  const [isEditing, setIsEditing] = useState(false);
   useEffect(() => {
-    if (isEditing && refInput.current) {
+    // isEditing이 true가 될 때 실행되는 useEffect
+    // true가 되면 해당 input에 포커스(키보드 입력)가 생김
+    if (isEditing) {
+      // isEditing && refInput.current 원래 이랬음
       refInput.current.focus();
     }
   }, [isEditing]);
@@ -19,14 +22,13 @@ const OneTodo = ({ item, deleteTodo, editTodo, index }) => {
     deleteTodo(item.id);
   };
   const _editTodo = () => {
-    // 여기가 펜 버튼 눌렀을 때 실행되는 부분
-    // ㄴ setEditing도 바뀌고 input에 포커스도 되었으면 좋겠음
     setIsEditing(true);
   };
   const _handleTodoChange = (text) => {
     setText(text);
   };
   const _onSubmitEditing = () => {
+    // 등록 버튼 눌렀을 때 실행되는 코드
     if (isEditing) {
       if (text.length != 0) {
         const editedItem = Object.assign({}, item, { text });
@@ -37,9 +39,6 @@ const OneTodo = ({ item, deleteTodo, editTodo, index }) => {
   };
   const _onBlur = () => {
     if (isEditing) {
-      // text: input에 입력된 내용
-      // ㄴ 펜버튼 누르고 input 입력 안하고 blur 처리되었을 때는 이거 길이 0 아님
-      // item.text: 입력하고 확인("Done") 버튼 눌러서 입력된 내용
       if (text.length != 0) {
         if (item.text == 0) {
           alert("내용 등록은 완료 버튼을 눌려주세요");

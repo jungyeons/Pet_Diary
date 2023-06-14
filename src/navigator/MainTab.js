@@ -2,7 +2,7 @@ import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Ionicons } from "@expo/vector-icons";
 import Community from "../community/Community";
-import Calender from "../calender/retrieve/Calender";
+import Calender from "../calender/Calender";
 import CheckList from "../checkList/CheckList";
 
 const Tab = createBottomTabNavigator();

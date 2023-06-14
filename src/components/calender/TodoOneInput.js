@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { StyleSheet, TextInput, View } from "react-native";
 import PropTypes from "prop-types";
 
@@ -9,15 +9,18 @@ const TodoOneInput = ({
   onBlur,
   refInput,
 }) => {
+  const [currentText, setCurrentText] = useState(item.text);
   return (
     <View style={styles.todoInputView}>
       <View style={{ width: 10 }} />
       <TextInput
+        value={currentText}
         ref={refInput}
         onChangeText={(text) => {
+          setCurrentText(text);
           handleTodoChange(text);
         }}
-        placeholder={item.text == "" ? "(할 일을 입력해 주세요)" : item.text}
+        placeholder={"(할 일을 입력해 주세요)"}
         style={styles.todoInputs}
         placeholderTextColor={"#808080"}
         onSubmitEditing={onSubmitEditing}

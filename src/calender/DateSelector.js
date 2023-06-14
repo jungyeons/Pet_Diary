@@ -11,7 +11,7 @@ export const SelectTypes = {
 const DateSelector = ({ selectorType, operate, dateValue }) => {
   return (
     <View style={{ flexDirection: "row" }}>
-      <Pressable onPressOut={() => operate(dateValue - 1)} hitSlop={3}>
+      <Pressable onPressOut={() => operate(dateValue - 1)} hitSlop={4}>
         <AntDesign name="left" size={20} color="black" />
       </Pressable>
       <Text style={{ fontSize: 15, color: "black", fontWeight: "bold" }}>
@@ -19,7 +19,7 @@ const DateSelector = ({ selectorType, operate, dateValue }) => {
         {dateValue}
         {selectorType}
       </Text>
-      <Pressable onPressOut={() => operate(dateValue + 1)} hitSlop={3}>
+      <Pressable onPressOut={() => operate(dateValue + 1)} hitSlop={4}>
         <AntDesign name="right" size={20} color="black" />
       </Pressable>
     </View>
