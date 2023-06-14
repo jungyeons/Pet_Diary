@@ -35,7 +35,7 @@ const App = () => {
           component={MainTab}
           options={{
             headerBackTitleVisible: false,
-            // headerShown: false,
+            headerShown: true, // 임시 - 로그인 구현후 지울 예정
           }}
         />
       </Stack.Navigator>

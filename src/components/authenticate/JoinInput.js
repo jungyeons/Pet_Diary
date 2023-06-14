@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { StyleSheet, Text, TextInput, View } from "react-native";
+import { StyleSheet, TextInput, View } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { Entypo } from "@expo/vector-icons";
@@ -50,6 +50,8 @@ const Input = (props) => {
         keyboardType={
           props.inputType == InputType.AGE ? "number-pad" : "default"
         }
+        returnKeyType="done"
+        autoCapitalize="none"
       />
     </View>
   );
