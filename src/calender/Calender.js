@@ -109,9 +109,9 @@ export default function Calendar() {
     // 할 일 삭제
     const dateID = year + "" + month + "" + day;
     const currentTodosOfDates = Object.assign({}, todosOfDates);
-    const currentTodos = Object.assign({}, currentTodos);
-    delete currentTodos[id];
-    setCurrentTodos(currentTodos);
+    const assignTodos = Object.assign({}, currentTodos);
+    delete assignTodos[id];
+    setCurrentTodos(assignTodos);
     if (Object.values(currentTodos).length == 1) {
       delete currentTodosOfDates[dateID];
       setTodosOfDates(currentTodosOfDates);
@@ -124,10 +124,10 @@ export default function Calendar() {
     // 할 일 수정
     const dateID = year + "" + month + "" + day;
     const currentTodosOfDates = Object.assign({}, todosOfDates);
-    const currentTodos = Object.assign({}, currentTodos);
-    currentTodos[item.id] = item;
-    setCurrentTodos(currentTodos);
-    currentTodosOfDates[dateID].todos = currentTodos;
+    const assignTodos = Object.assign({}, currentTodos);
+    assignTodos[item.id] = item;
+    setCurrentTodos(assignTodos);
+    currentTodosOfDates[dateID].todos = assignTodos;
     setTodosOfDates(currentTodosOfDates);
   };
   return (

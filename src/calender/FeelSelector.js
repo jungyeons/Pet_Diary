@@ -12,39 +12,41 @@ const Feels = {
   SOBAD: " 최악ㅜ ",
 };
 
-const FeelSelector = ({ isNow, setFeelCondition, feelsIdx }) => {
+const FeelSelector = ({ setFeelCondition, feelsIdx }) => {
   const feelsArr = Object.values(Feels);
   const getLeft = () => {
-    if (isNow()) {
-      return feelsIdx == 0 ? (
-        <View style={{ width: 20 }} />
-      ) : (
-        <Pressable
-          hitSlop={4}
-          onPressIn={() => {
-            setFeelCondition(feelsIdx - 1);
-          }}
-        >
-          <AntDesign name="left" size={20} color="#745757" />
-        </Pressable>
-      );
-    }
+    // if (isNow()) {
+
+    // }
+    return feelsIdx == 0 ? (
+      <View style={{ width: 20 }} />
+    ) : (
+      <Pressable
+        hitSlop={4}
+        onPressIn={() => {
+          setFeelCondition(feelsIdx - 1);
+        }}
+      >
+        <AntDesign name="left" size={20} color="#745757" />
+      </Pressable>
+    );
   };
   const getRight = () => {
-    if (isNow()) {
-      return feelsIdx == feelsArr.length - 1 ? (
-        <View style={{ width: 20 }} />
-      ) : (
-        <Pressable
-          hitSlop={4}
-          onPressIn={() => {
-            setFeelCondition(feelsIdx + 1);
-          }}
-        >
-          <AntDesign name="right" size={20} color="#745757" />
-        </Pressable>
-      );
-    }
+    // if (isNow()) {
+
+    // }
+    return feelsIdx == feelsArr.length - 1 ? (
+      <View style={{ width: 20 }} />
+    ) : (
+      <Pressable
+        hitSlop={4}
+        onPressIn={() => {
+          setFeelCondition(feelsIdx + 1);
+        }}
+      >
+        <AntDesign name="right" size={20} color="#745757" />
+      </Pressable>
+    );
   };
 
   return (
@@ -61,7 +63,6 @@ const FeelSelector = ({ isNow, setFeelCondition, feelsIdx }) => {
 };
 
 FeelSelector.propTypes = {
-  isNow: PropTypes.func.isRequired,
   setFeelCondition: PropTypes.func.isRequired,
   feelsIdx: PropTypes.number.isRequired,
 };
