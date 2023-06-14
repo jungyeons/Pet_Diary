@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { StyleSheet, Text, TextInput, View } from "react-native";
 
@@ -11,6 +11,7 @@ export const InputType = {
 };
 
 const Input = (props) => {
+  const [currentText, setCurrentText] = useState("");
   const getMessage = () => {
     let value = "";
     if (props.inputType == InputType.ID) value = "아이디";
@@ -26,15 +27,19 @@ const Input = (props) => {
         {props.inputType} :{" "}
       </Text>
       <TextInput
+        value={currentText}
+        ref={props.refInput}
         style={styles.InputText}
         onChangeText={(text) => {
+          setCurrentText(text);
           props.operate(text);
         }}
         placeholder={getMessage()}
-        keyboardType={
-          props.inputType == InputType.AGE ? "number-pad" : "default"
-        }
         secureTextEntry={props.inputType == InputType.PW}
+        autoCapitalize="none"
+        autoCorrect={false}
+        returnKeyType="done"
+        onSubmitEditing={props.onSubmit}
       />
     </View>
   );
@@ -57,6 +62,8 @@ const styles = StyleSheet.create({
 Input.propTypes = {
   inputType: PropTypes.oneOf(Object.values(InputType)).isRequired,
   operate: PropTypes.func.isRequired,
+  refInput: PropTypes.any.isRequired,
+  onSubmit: PropTypes.func.isRequired,
 };
 
 export default Input;
