@@ -8,7 +8,6 @@ import DateSelectButton, {
 import DateSelector, { SelectTypes } from "./DateSelector";
 
 const GridCalender = ({
-  selectedDate,
   year,
   month,
   handleDateSelection,
@@ -130,7 +129,6 @@ const GridCalender = ({
 };
 
 GridCalender.propTypes = {
-  selectedDate: PropTypes.string.isRequired,
   year: PropTypes.number.isRequired,
   month: PropTypes.number.isRequired,
   handleDateSelection: PropTypes.func.isRequired,

@@ -1,3 +1,5 @@
+/* eslint-disable no-undef */
+/* eslint-disable react/prop-types */
 import React, { useState } from "react";
 import {
   View,
@@ -16,8 +18,26 @@ const Membership = ({ navigation }) => {
   const [name, setName] = useState("");
   const [nickName, setNickName] = useState("");
   const [age, setAge] = useState(0);
-  const showMembershipInfo = () => {
-    return id + ", " + pw + ", " + name + ", " + nickName + ", " + age;
+
+  const createNewMembership = () => {
+    if (name.length == 0) alert("이름이 입력되지 않았습니다.");
+    else if (nickName.length == 0) alert("닉네임이 입력되지 않았습니다.");
+    else if (age == -1) alert("나이가 입력되지 않았습니다.");
+    else if (id.length == 0) alert("아이디가 입력되지 않았습니다.");
+    else if (pw.length == 0) alert("비밀번호가 입력되지 않았습니다.");
+    else {
+      const newMembership = {
+        [id]: {
+          id: id,
+          pw: pw,
+          name: name,
+          nickName: nickName,
+          age: age,
+        },
+      };
+      alert("등록 완료");
+      console.log(newMembership);
+    }
   };
 
   return (
@@ -34,7 +54,6 @@ const Membership = ({ navigation }) => {
             inputType={InputType.NAME}
             operate={(text) => {
               setName(text);
-              console.log(name);
             }}
           />
           <View style={{ height: 10 }}></View>
@@ -42,15 +61,14 @@ const Membership = ({ navigation }) => {
             inputType={InputType.NickName}
             operate={(text) => {
               setNickName(text);
-              console.log(nickName);
             }}
           />
           <View style={{ height: 10 }}></View>
           <JoinInput
             inputType={InputType.AGE}
             operate={(text) => {
-              setAge(text);
-              console.log(age);
+              if (text.length == 0) setAge(-1);
+              else setAge(text);
             }}
           />
           <View style={{ height: 10 }}></View>
@@ -58,7 +76,6 @@ const Membership = ({ navigation }) => {
             inputType={InputType.ID}
             operate={(text) => {
               setId(text);
-              console.log(id);
             }}
           />
           <View style={{ height: 10 }}></View>
@@ -66,7 +83,6 @@ const Membership = ({ navigation }) => {
             inputType={InputType.PW}
             operate={(text) => {
               setPw(text);
-              console.log(pw);
             }}
           />
           <View style={{ height: 60 }}></View>
@@ -75,10 +91,7 @@ const Membership = ({ navigation }) => {
         <View style={styles.footer}>
           {/* Footer(chile - Button, Button) */}
           <Button title="BACK" onPress={() => navigation.navigate("Login")} />
-          <Button
-            title="JOIN"
-            onPress={() => console.log(showMembershipInfo())}
-          />
+          <Button title="JOIN" onPress={() => createNewMembership()} />
         </View>
       </View>
     </TouchableWithoutFeedback>

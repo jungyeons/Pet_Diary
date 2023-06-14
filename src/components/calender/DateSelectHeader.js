@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 
 const DateSelectHeader = () => {
   return (
-    <View key={"header"} style={styles.dateHeaderView}>
+    <View style={styles.dateHeaderView}>
       <DateSelectList weekDay="일" />
       <DateSelectList weekDay="월" />
       <DateSelectList weekDay="화" />
