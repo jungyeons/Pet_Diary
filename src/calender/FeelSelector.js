@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React from "react";
 import { Pressable, Text, View } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import PropTypes from "prop-types";
 
-export const Feels = {
+const Feels = {
   DEFAULT: "기분입력",
   VNICE: " 최고! ",
   NICE: "좋아요!",
@@ -12,9 +12,8 @@ export const Feels = {
   SOBAD: " 최악ㅜ ",
 };
 
-const FeelSelector = ({ isNow, setFeelCondition, selectedFeel }) => {
+const FeelSelector = ({ isNow, setFeelCondition, feelsIdx }) => {
   const feelsArr = Object.values(Feels);
-  const [feelsIdx, setFeelsIdx] = useState(0);
   const getLeft = () => {
     if (isNow()) {
       return feelsIdx == 0 ? (
@@ -23,7 +22,6 @@ const FeelSelector = ({ isNow, setFeelCondition, selectedFeel }) => {
         <Pressable
           hitSlop={4}
           onPressIn={() => {
-            setFeelsIdx(feelsIdx - 1);
             setFeelCondition(feelsIdx - 1);
           }}
         >
@@ -40,7 +38,6 @@ const FeelSelector = ({ isNow, setFeelCondition, selectedFeel }) => {
         <Pressable
           hitSlop={4}
           onPressIn={() => {
-            setFeelsIdx(feelsIdx + 1);
             setFeelCondition(feelsIdx + 1);
           }}
         >
@@ -55,7 +52,7 @@ const FeelSelector = ({ isNow, setFeelCondition, selectedFeel }) => {
       {getLeft()}
       <Text style={{ fontSize: 15, color: "black", fontWeight: "bold" }}>
         {"  "}
-        {selectedFeel}
+        {feelsArr[feelsIdx]}
         {"  "}
       </Text>
       {getRight()}
@@ -66,7 +63,7 @@ const FeelSelector = ({ isNow, setFeelCondition, selectedFeel }) => {
 FeelSelector.propTypes = {
   isNow: PropTypes.func.isRequired,
   setFeelCondition: PropTypes.func.isRequired,
-  selectedFeel: PropTypes.string.isRequired,
+  feelsIdx: PropTypes.number.isRequired,
 };
 
 export default FeelSelector;

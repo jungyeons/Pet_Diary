@@ -1,44 +1,39 @@
-/* eslint-disable no-undef */
-/* eslint-disable react/prop-types */
 import React, { useState } from "react";
 import { View, Text, StyleSheet } from "react-native";
 import ContentHeader from "./ContentHeader";
 import GridCalender from "./GridCalender";
 import TodosComp from "./TodosComp";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import { Feels } from "./FeelSelector";
 
 export default function Calendar() {
   let now = new Date();
-  const feelsArr = Object.values(Feels);
-  const [year, setYear] = useState(new Date().getFullYear()); // 선택 년도
-  const [month, setMonth] = useState(new Date().getMonth() + 1); // 선택 월
-  const [day, setDay] = useState(new Date().getDate()); // 선택 일
+  const [year, setYear] = useState(new Date().getFullYear());
+  const [month, setMonth] = useState(new Date().getMonth() + 1);
+  const [day, setDay] = useState(new Date().getDate());
 
   const [todosOfDates, setTodosOfDates] = useState({}); // [DATE]: {date: DATE, todos: {todos}}형 객체
   const [feelOfDates, setFeelOfDates] = useState({});
-  const [selectedTodos, setSelectedTodos] = useState({}); // 할 일 목록(날짜 선택 시 여기에 todos가 들어감)
-  const [selectedFeel, setSelectedFeel] = useState(feelsArr[0]);
+  const [currentTodos, setCurrentTodos] = useState({}); // 할 일 목록(날짜 선택 시 여기에 todos가 들어감)
+  const [currentFeelsIdx, setCurrentFeelsIdx] = useState(0);
+
   const setFeelCondition = (idx) => {
     // 그날 기분 선택
-    const selectedFeel = feelsArr[idx];
     const dateID = year + "" + month + "" + day;
     const feelOfDate = feelOfDates[dateID];
     if (feelOfDate == undefined) {
-      // 그날의 기분 하나 추가
       const newFeelOfDate = {
         [dateID]: {
           date: dateID,
-          feel: selectedFeel,
+          feelIdx: idx,
         },
       };
       setFeelOfDates({ ...feelOfDates, ...newFeelOfDate });
     } else {
       const currentFeelOfDate = Object.assign({}, feelOfDates);
-      currentFeelOfDate[dateID].feel = selectedFeel;
+      currentFeelOfDate[dateID].feelIdx = idx;
       setFeelOfDates(currentFeelOfDate);
     }
-    setSelectedFeel(feelsArr[idx]);
+    setCurrentFeelsIdx(idx);
   };
   const handleYearChange = (newYear) => {
     // 년도 변경시 변경 년도 지정
@@ -68,24 +63,28 @@ export default function Calendar() {
   };
 
   const handleDateSelection = (year, month, day) => {
+    // 날짜 선택 시 날짜 변경
     setYear(year);
     setMonth(month);
     setDay(day);
     changeSelectedDateInfo(year, month, day);
   };
   const changeSelectedDateInfo = (year, month, day) => {
+    // 현재 할 일 및 기분 변경
     if (todosOfDates[year + "" + month + "" + day] == undefined)
-      setSelectedTodos({});
-    else setSelectedTodos(todosOfDates[year + "" + month + "" + day].todos);
+      setCurrentTodos({});
+    else setCurrentTodos(todosOfDates[year + "" + month + "" + day].todos);
+
     if (feelOfDates[year + "" + month + "" + day] == undefined)
-      setSelectedFeel(feelsArr[0]);
-    else setSelectedFeel(feelOfDates[year + "" + month + "" + day].feel);
+      setCurrentFeelsIdx(0);
+    else setCurrentFeelsIdx(feelOfDates[year + "" + month + "" + day].feelIdx);
   };
   const addTodo = () => {
+    // 할 일 추가
     const dateID = year + "" + month + "" + day;
     const ID = Date.now().toString();
 
-    if (Object.values(selectedTodos).length == 0) {
+    if (Object.values(currentTodos).length == 0) {
       const newTodosOfDate = {
         [dateID]: {
           dateId: dateID,
@@ -95,25 +94,25 @@ export default function Calendar() {
         },
       };
       setTodosOfDates({ ...todosOfDates, ...newTodosOfDate });
-      setSelectedTodos({ ...selectedTodos, ...newTodosOfDate[dateID].todos });
+      setCurrentTodos({ ...currentTodos, ...newTodosOfDate[dateID].todos });
     } else {
       const currentTodosOfDates = Object.assign({}, todosOfDates);
       const newTodoObject = {
         [ID]: { id: ID, text: "" },
       };
-      setSelectedTodos({ ...selectedTodos, ...newTodoObject });
-      currentTodosOfDates[dateID].todos = selectedTodos;
+      setCurrentTodos({ ...currentTodos, ...newTodoObject });
+      currentTodosOfDates[dateID].todos = currentTodos;
       setTodosOfDates(currentTodosOfDates);
     }
   };
   const deleteTodo = (id) => {
-    // 할 일 삭제(id값을 받고 입력 id에 맞는 객체 삭제(delete) 이후 todos 재지정)
+    // 할 일 삭제
     const dateID = year + "" + month + "" + day;
     const currentTodosOfDates = Object.assign({}, todosOfDates);
-    const currentTodos = Object.assign({}, selectedTodos);
+    const currentTodos = Object.assign({}, currentTodos);
     delete currentTodos[id];
-    setSelectedTodos(currentTodos);
-    if (Object.values(selectedTodos).length == 1) {
+    setCurrentTodos(currentTodos);
+    if (Object.values(currentTodos).length == 1) {
       delete currentTodosOfDates[dateID];
       setTodosOfDates(currentTodosOfDates);
     } else {
@@ -122,11 +121,12 @@ export default function Calendar() {
     }
   };
   const editTodo = (item) => {
+    // 할 일 수정
     const dateID = year + "" + month + "" + day;
     const currentTodosOfDates = Object.assign({}, todosOfDates);
-    const currentTodos = Object.assign({}, selectedTodos);
+    const currentTodos = Object.assign({}, currentTodos);
     currentTodos[item.id] = item;
-    setSelectedTodos(currentTodos);
+    setCurrentTodos(currentTodos);
     currentTodosOfDates[dateID].todos = currentTodos;
     setTodosOfDates(currentTodosOfDates);
   };
@@ -153,10 +153,10 @@ export default function Calendar() {
             month={month}
             day={day}
             setFeelCondition={setFeelCondition}
-            selectedFeel={selectedFeel}
+            feelsIdx={currentFeelsIdx}
           />
           <TodosComp
-            todos={selectedTodos}
+            todos={currentTodos}
             deleteTodo={deleteTodo}
             editTodo={editTodo}
             addTodo={addTodo}
