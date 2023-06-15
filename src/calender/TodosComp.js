@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
     marginTop: 2,
     borderRadius: 12,
     alignItems: "center",
-    backgroundColor: "#D2B48C",
+    backgroundColor: "#745757",
     marginLeft: 3,
   },
   todoTitle: {

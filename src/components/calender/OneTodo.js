@@ -3,7 +3,6 @@ import React, { useEffect, useRef, useState } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import PropTypes from "prop-types";
 import { AntDesign } from "@expo/vector-icons";
-import { FontAwesome } from "@expo/vector-icons";
 import TodoOneInput from "./TodoOneInput";
 
 const OneTodo = ({ item, deleteTodo, editTodo, index }) => {
@@ -40,38 +39,40 @@ const OneTodo = ({ item, deleteTodo, editTodo, index }) => {
   const _onBlur = () => {
     if (isEditing) {
       if (text.length != 0) {
-        if (item.text == 0) {
-          alert("내용 등록은 완료 버튼을 눌려주세요");
-          refInput.current.focus();
+        if (item.text.length == 0) {
+          setIsEditing(false);
         } else {
           setIsEditing(false);
           setText(item.text);
         }
       } else {
-        alert("최소 한 글자 입력해 주세요");
-        refInput.current.focus();
+        setIsEditing(false);
       }
     }
   };
   return isEditing ? (
-    <TodoOneInput
-      refInput={refInput}
-      item={item}
-      handleTodoChange={_handleTodoChange}
-      onSubmitEditing={_onSubmitEditing}
-      onBlur={_onBlur}
-    />
+    <View style={[styles.todoView, { justifyContent: "flex-start" }]}>
+      <Text style={styles.todoTexts}>할일 {index + 1} : </Text>
+      <TodoOneInput
+        refInput={refInput}
+        item={item}
+        handleTodoChange={_handleTodoChange}
+        onSubmitEditing={_onSubmitEditing}
+        onBlur={_onBlur}
+      />
+    </View>
   ) : (
     <View style={styles.todoView}>
-      <Text style={styles.todoTexts}>
-        할일 {index + 1} : {item.text}
-      </Text>
+      <Pressable onPressIn={_editTodo}>
+        <View style={{ width: 330 }}>
+          <Text style={styles.todoTexts}>
+            할일 {index + 1} : {item.text}
+          </Text>
+        </View>
+      </Pressable>
       <View style={styles.buttonView}>
         <Pressable onPressIn={_deleteTodo}>
           <AntDesign name="minuscircleo" size={24} color="red" />
-        </Pressable>
-        <Pressable onPressIn={_editTodo}>
-          <FontAwesome name="pencil" size={24} color="blue" />
         </Pressable>
       </View>
     </View>
@@ -99,9 +100,9 @@ const styles = StyleSheet.create({
     color: "#745757",
   },
   buttonView: {
-    width: 80,
+    width: 30,
     flexDirection: "row",
-    justifyContent: "space-between",
+    justifyContent: "flex-end",
     marginRight: 15,
   },
 });
