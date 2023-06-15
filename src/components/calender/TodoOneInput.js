@@ -12,7 +12,6 @@ const TodoOneInput = ({
   const [currentText, setCurrentText] = useState(item.text);
   return (
     <View style={styles.todoInputView}>
-      <View style={{ width: 10 }} />
       <TextInput
         value={currentText}
         ref={refInput}

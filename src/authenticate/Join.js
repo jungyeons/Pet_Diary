@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
 /* eslint-disable react/prop-types */
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import {
   View,
   Text,
@@ -12,31 +12,94 @@ import JoinInput, { InputType } from "../components/authenticate/JoinInput";
 import Button from "../components/authenticate/Button";
 import { Entypo } from "@expo/vector-icons";
 
-const Membership = ({ navigation }) => {
+const Membership = ({ navigation, route }) => {
   const [id, setId] = useState("");
   const [pw, setPw] = useState("");
   const [name, setName] = useState("");
   const [nickName, setNickName] = useState("");
-  const [age, setAge] = useState(0);
+  const [age, setAge] = useState(-1);
+  const refId = useRef(null);
+  const refPw = useRef(null);
+  const refName = useRef(null);
+  const refNickName = useRef(null);
+  const refAge = useRef(null);
+
+  const nameSubmit = () => {
+    if (nickName.length == 0) refNickName.current.focus();
+  };
+  const nickNameSubmit = () => {
+    if (age == -1) refAge.current.focus();
+  };
+  const ageSubmit = () => {
+    if (id.length == 0) refId.current.focus();
+  };
+  const idSubmit = () => {
+    if (pw.length == 0) refPw.current.focus();
+  };
+  const pwSubmit = () => {
+    // 아무것도 안함(일단)
+  };
+
+  const checkName = () => {
+    if (name.length == 0) {
+      alert("이름이 입력되지 않았습니다.");
+      return false;
+    } else return true;
+  };
+
+  const checkNickName = () => {
+    if (nickName.length == 0) {
+      alert("닉네임이 입력되지 않았습니다.");
+      return false;
+    } else return true;
+  };
+
+  const checkAge = () => {
+    if (age == -1) {
+      alert("나이가 입력되지 않았습니다.");
+      return false;
+    } else return true;
+  };
+
+  const checkId = () => {
+    if (id.length == 0) {
+      alert("아이디가 입력되지 않았습니다.");
+      return false;
+    } else return true;
+  };
+
+  const checkPw = () => {
+    if (pw.length == 0) {
+      alert("비밀번호가 입력되지 않았습니다.");
+      return false;
+    } else return true;
+  };
 
   const createNewMembership = () => {
-    if (name.length == 0) alert("이름이 입력되지 않았습니다.");
-    else if (nickName.length == 0) alert("닉네임이 입력되지 않았습니다.");
-    else if (age == -1) alert("나이가 입력되지 않았습니다.");
-    else if (id.length == 0) alert("아이디가 입력되지 않았습니다.");
-    else if (pw.length == 0) alert("비밀번호가 입력되지 않았습니다.");
+    if (!checkName()) return;
+    else if (!checkNickName()) return;
+    else if (!checkAge()) return;
+    else if (!checkId()) return;
+    else if (!checkPw()) return;
     else {
-      const newMembership = {
-        [id]: {
-          id: id,
-          pw: pw,
-          name: name,
-          nickName: nickName,
-          age: age,
-        },
-      };
-      alert("등록 완료");
-      console.log(newMembership);
+      if (route.params.memberships[id] != undefined) {
+        alert(
+          "아이디가중복된 회원정보가 존재합니다.\n아이디를 다시 입력해 주세요"
+        );
+        refId.current.focus();
+      } else {
+        const newMembership = {
+          [id]: {
+            id: id,
+            pw: pw,
+            name: name,
+            nickName: nickName,
+            age: age,
+          },
+        };
+        alert("등록 완료");
+        navigation.navigate("Login", { newMembership: newMembership });
+      }
     }
   };
 
@@ -55,6 +118,8 @@ const Membership = ({ navigation }) => {
             operate={(text) => {
               setName(text);
             }}
+            refInput={refName}
+            onSubmit={nameSubmit}
           />
           <View style={{ height: 10 }}></View>
           <JoinInput
@@ -62,6 +127,8 @@ const Membership = ({ navigation }) => {
             operate={(text) => {
               setNickName(text);
             }}
+            refInput={refNickName}
+            onSubmit={nickNameSubmit}
           />
           <View style={{ height: 10 }}></View>
           <JoinInput
@@ -70,6 +137,8 @@ const Membership = ({ navigation }) => {
               if (text.length == 0) setAge(-1);
               else setAge(text);
             }}
+            refInput={refAge}
+            onSubmit={ageSubmit}
           />
           <View style={{ height: 10 }}></View>
           <JoinInput
@@ -77,6 +146,8 @@ const Membership = ({ navigation }) => {
             operate={(text) => {
               setId(text);
             }}
+            refInput={refId}
+            onSubmit={idSubmit}
           />
           <View style={{ height: 10 }}></View>
           <JoinInput
@@ -84,6 +155,8 @@ const Membership = ({ navigation }) => {
             operate={(text) => {
               setPw(text);
             }}
+            refInput={refPw}
+            onSubmit={pwSubmit}
           />
           <View style={{ height: 60 }}></View>
           <Entypo name="emoji-happy" size={140} color="black" />
@@ -97,7 +170,7 @@ const Membership = ({ navigation }) => {
     </TouchableWithoutFeedback>
   );
 };
-export const styles = StyleSheet.create({
+const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: "center",

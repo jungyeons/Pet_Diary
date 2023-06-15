@@ -23,3 +23,17 @@
 2. npm install @react-navigation/stack (스택 네비게이션)
 3. npm install @react-navigation/bottom-tabs (탭 네비게이션)
 4. npm install react-native-keyboard-aware-scroll-view (텍스트 입력 스크롤로 피해주는 컴포넌트)
+
+- 로그아웃 버튼이 포함된 Header를 src 폴더 안에 header폴더로 만들어두었으니, 아래와 같이 수정 부탁드립니다..!(0615)
+
+1. 각 CheckList, Community js 파일 수정
+   => const CheckList(혹은 Community) = ({ navigation }) => {}
+2. 각 CheckList, Community의 return문 다음과 같이 수정
+   =>
+   return (
+   <View style={styles.container}>
+   <View style={{ marginBottom: 40 }}></View>
+   <HeaderComp navigation={navigation} title={"CheckList" 혹은 "Community"} />
+   ...(여긴 각자 구현하신 부분이 들어가는 자리입니다!)
+   </View>
+   );
