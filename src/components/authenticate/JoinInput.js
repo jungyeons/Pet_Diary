@@ -42,6 +42,7 @@ const Input = (props) => {
       {getIcon()}
       <View style={{ width: 15 }}></View>
       <TextInput
+        ref={props.refInput}
         style={[styles.InputText, { backgroundColor: "white", color: "black" }]}
         onChangeText={(text) => {
           props.operate(text);
@@ -52,6 +53,7 @@ const Input = (props) => {
         }
         returnKeyType="done"
         autoCapitalize="none"
+        onSubmitEditing={() => props.onSubmit()}
       />
     </View>
   );
@@ -75,6 +77,8 @@ const styles = StyleSheet.create({
 Input.propTypes = {
   inputType: PropTypes.oneOf(Object.values(InputType)).isRequired,
   operate: PropTypes.func.isRequired,
+  refInput: PropTypes.any.isRequired,
+  onSubmit: PropTypes.func.isRequired,
 };
 
 export default Input;

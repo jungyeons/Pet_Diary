@@ -1,11 +1,13 @@
+/* eslint-disable react/prop-types */
 import React, { useState } from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
 import ContentHeader from "./ContentHeader";
 import GridCalender from "./GridCalender";
 import TodosComp from "./TodosComp";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import HeaderComp from "../header/HeaderComp";
 
-export default function Calendar() {
+const Calendar = ({ navigation }) => {
   let now = new Date();
   const [year, setYear] = useState(new Date().getFullYear());
   const [month, setMonth] = useState(new Date().getMonth() + 1);
@@ -109,9 +111,9 @@ export default function Calendar() {
     // 할 일 삭제
     const dateID = year + "" + month + "" + day;
     const currentTodosOfDates = Object.assign({}, todosOfDates);
-    const currentTodos = Object.assign({}, currentTodos);
-    delete currentTodos[id];
-    setCurrentTodos(currentTodos);
+    const assignTodos = Object.assign({}, currentTodos);
+    delete assignTodos[id];
+    setCurrentTodos(assignTodos);
     if (Object.values(currentTodos).length == 1) {
       delete currentTodosOfDates[dateID];
       setTodosOfDates(currentTodosOfDates);
@@ -124,19 +126,17 @@ export default function Calendar() {
     // 할 일 수정
     const dateID = year + "" + month + "" + day;
     const currentTodosOfDates = Object.assign({}, todosOfDates);
-    const currentTodos = Object.assign({}, currentTodos);
-    currentTodos[item.id] = item;
-    setCurrentTodos(currentTodos);
-    currentTodosOfDates[dateID].todos = currentTodos;
+    const assignTodos = Object.assign({}, currentTodos);
+    assignTodos[item.id] = item;
+    setCurrentTodos(assignTodos);
+    currentTodosOfDates[dateID].todos = assignTodos;
     setTodosOfDates(currentTodosOfDates);
   };
   return (
     <KeyboardAwareScrollView>
-      <View style={{ marginBottom: 40 }}></View>
       <View style={styles.container}>
-        <View style={styles.header}>
-          <Text style={styles.headerTitle}>Calender</Text>
-        </View>
+        <View style={{ marginBottom: 40 }} />
+        <HeaderComp navigation={navigation} title={"Calender"} />
         <View style={styles.calView}>
           <GridCalender
             year={year}
@@ -165,22 +165,12 @@ export default function Calendar() {
       </View>
     </KeyboardAwareScrollView>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: "center",
-  },
-  headerTitle: {
-    fontSize: 30,
-    color: "#000000",
-    fontWeight: "bold",
-  },
-  header: {
-    height: 65,
-    justifyContent: "center",
-    alignItems: "center",
   },
   calView: {
     flex: 3,
@@ -191,3 +181,5 @@ const styles = StyleSheet.create({
     flex: 3,
   },
 });
+
+export default Calendar;

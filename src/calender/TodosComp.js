@@ -20,7 +20,6 @@ const TodosComp = ({ todos, deleteTodo, editTodo, addTodo }) => {
         <View style={styles.addButton}>
           <TodoAddButton
             buttonOperate={() => {
-              // console.log(Object.values(todos).length);
               // 여기에서 포커스 잡게 못하나...
               addTodo();
             }}
@@ -65,7 +64,7 @@ const styles = StyleSheet.create({
     marginTop: 2,
     borderRadius: 12,
     alignItems: "center",
-    backgroundColor: "#D2B48C",
+    backgroundColor: "#745757",
     marginLeft: 3,
   },
   todoTitle: {
