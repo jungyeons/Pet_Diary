@@ -25,7 +25,7 @@ const Community = () => {
           <Stack.Screen
             name="NoteDetail"
             component={NoteDetail}
-            options={{ title: "글쓰기" }}
+            options={{ title: "글 내용" }}
           />
         </Stack.Navigator>
       </NoteProvider>

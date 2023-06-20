@@ -114,13 +114,10 @@ const Calendar = ({ navigation }) => {
     const assignTodos = Object.assign({}, currentTodos);
     delete assignTodos[id];
     setCurrentTodos(assignTodos);
-    if (Object.values(currentTodos).length == 1) {
+    if (Object.values(currentTodos).length == 1)
       delete currentTodosOfDates[dateID];
-      setTodosOfDates(currentTodosOfDates);
-    } else {
-      currentTodosOfDates[dateID].todos = currentTodos;
-      setTodosOfDates(currentTodosOfDates);
-    }
+    else currentTodosOfDates[dateID].todos = assignTodos;
+    setTodosOfDates(currentTodosOfDates);
   };
   const editTodo = (item) => {
     // 할 일 수정

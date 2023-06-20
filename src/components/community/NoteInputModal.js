@@ -8,6 +8,7 @@ import {
   TextInput,
   TouchableWithoutFeedback,
   Keyboard,
+  SafeAreaView,
 } from "react-native";
 import colors from "./misc/colors";
 import RoundIconBtn from "./RoundIconBtn";
@@ -54,9 +55,9 @@ const NoteInputModal = ({ visible, onClose, onSubmit, note, isEdit }) => {
 
   return (
     <>
-      <StatusBar barStyle="dark-content" backgroundColor={colors.LIGHT} />
+      <StatusBar hidden></StatusBar>
       <Modal visible={visible} animationType="fade">
-        <View style={styles.container}>
+        <SafeAreaView style={{ margin: 10 }}>
           <TextInput
             value={title}
             onChangeText={(text) => handleOnChangeText(text, "title")}
@@ -85,7 +86,7 @@ const NoteInputModal = ({ visible, onClose, onSubmit, note, isEdit }) => {
               />
             ) : null}
           </View>
-        </View>
+        </SafeAreaView>
         <TouchableWithoutFeedback onPress={handleModalClose}>
           <View style={[styles.modalBG, StyleSheet.absoluteFillObject]} />
         </TouchableWithoutFeedback>

@@ -16,6 +16,7 @@ import RoundIconBtn from "../components/community/RoundIconBtn";
 import SearchBar from "../components/community/SearchBar";
 import { useNotes } from "../components/community/contexts/NoteProvider";
 import colors from "../components/community/misc/colors";
+import NoteDetail from "../components/community/NoteDetail";
 
 const reverseData = (data) => {
   return data.sort((a, b) => {
@@ -27,7 +28,7 @@ const reverseData = (data) => {
   });
 };
 
-const CatScreen = ({ user, navigation }) => {
+const CatScreen = ({ navigation }) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [resultNotFound, setResultNotFound] = useState(false);
@@ -94,7 +95,11 @@ const CatScreen = ({ user, navigation }) => {
               data={reverseNotes}
               keyExtractor={(item) => item.id.toString()}
               renderItem={({ item }) => (
-                <Note onPress={() => openNote(item)} item={item} />
+                <Note
+                  onPress={() => openNote(item)}
+                  item={item}
+                  {...console.log(NoteDetail)}
+                />
               )}
             />
           )}

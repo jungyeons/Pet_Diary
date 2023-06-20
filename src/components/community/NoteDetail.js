@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { ScrollView, StyleSheet, Text, View, Alert } from "react-native";
-import { useHeaderHeight } from "@react-navigation/stack";
 import colors from "./misc/colors";
 import RoundIconBtn from "./RoundIconBtn";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -21,7 +20,6 @@ const formatDate = (ms) => {
 
 const NoteDetail = (props) => {
   const [note, setNote] = useState(props.route.params.note);
-  const headerHeight = useHeaderHeight();
   const { setNotes } = useNotes();
   const [showModal, setShowModal] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
@@ -86,9 +84,7 @@ const NoteDetail = (props) => {
 
   return (
     <>
-      <ScrollView
-        contentContainerStyle={[styles.container, { paddingTop: headerHeight }]}
-      >
+      <ScrollView contentContainerStyle={[styles.container]}>
         <Text style={styles.time}>
           {note.isUpdated
             ? `수정일 ${formatDate(note.time)}`
